@@ -54,14 +54,22 @@
 		FB22E0002CD6CBB800670890 /* WishMaker */ = {
 			isa = PBXGroup;
 			children = (
-				FB22E0012CD6CBB800670890 /* AppDelegate.swift */,
-				FB22E0032CD6CBB800670890 /* SceneDelegate.swift */,
+				FB22E0152CD6CF9D00670890 /* App */,
 				FB22E0052CD6CBB800670890 /* ViewController.swift */,
 				FB22E00A2CD6CBBB00670890 /* Assets.xcassets */,
 				FB22E00C2CD6CBBB00670890 /* LaunchScreen.storyboard */,
 				FB22E00F2CD6CBBB00670890 /* Info.plist */,
 			);
 			path = WishMaker;
+			sourceTree = "<group>";
+		};
+		FB22E0152CD6CF9D00670890 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				FB22E0012CD6CBB800670890 /* AppDelegate.swift */,
+				FB22E0032CD6CBB800670890 /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
