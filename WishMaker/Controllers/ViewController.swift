@@ -20,7 +20,6 @@ final class ViewController: UIViewController {
         static let titleLabelLeading: CGFloat = 20
         static let titleLabelTop: CGFloat = 30
         static let titleLabelText: String = "Wish Maker"
-
         
         static let descriptionLines: Int = 0
         static let descriptionLabelSize: CGFloat = 12
@@ -29,7 +28,7 @@ final class ViewController: UIViewController {
         static let descriptionLabelText: String = "This app will bring you joy and will fulfill three of your wishes! The first wish is change the background color."
         
         static let sliderStackCorner: CGFloat = 20
-        static let sliderStackBottom: CGFloat = -40
+        static let sliderStackBottom: CGFloat = -340
         static let sliderStackLeading: CGFloat = 20
         
         static let alphaRGB: CGFloat = 1
@@ -41,18 +40,24 @@ final class ViewController: UIViewController {
         static let hideButtonTitleHide: String = "Hide sliders"
         static let hideButtonTitleShow: String = "Show sliders"
         static let randomButtomTitle: String = "Random color"
+        
+        static let addWishButtonTitle: String = "My wishes"
+        static let addWishButtonCorner: CGFloat = 20
+        static let addWishButtonTopIdent: CGFloat = 20
+        static let addWishButtonHeight: CGFloat = 52
     }
     
     // MARK: - Fields
-    private let titleLabel = UILabel()
-    private let descriptionLabel = UILabel()
-    private let sliderStack = UIStackView()
-    private let sliderRed = CustomSlider(title: Constants.red, min: Constants.sliderMin, max: Constants.sliderMax)
-    private let sliderGreen = CustomSlider(title: Constants.green, min: Constants.sliderMin, max: Constants.sliderMax)
-    private let sliderBlue = CustomSlider(title: Constants.blue, min: Constants.sliderMin, max: Constants.sliderMax)
-    private let buttonStack = UIStackView()
-    private let hideButton = CustomButton(title: Constants.hideButtonTitleHide)
-    private let randomButton = CustomButton(title: Constants.randomButtomTitle)
+    private let titleLabel: UILabel = UILabel()
+    private let descriptionLabel: UILabel = UILabel()
+    private let sliderStack: UIStackView = UIStackView()
+    private let sliderRed: CustomSlider = CustomSlider(title: Constants.red, min: Constants.sliderMin, max: Constants.sliderMax)
+    private let sliderGreen: CustomSlider = CustomSlider(title: Constants.green, min: Constants.sliderMin, max: Constants.sliderMax)
+    private let sliderBlue: CustomSlider = CustomSlider(title: Constants.blue, min: Constants.sliderMin, max: Constants.sliderMax)
+    private let buttonStack: UIStackView = UIStackView()
+    private let hideButton: UIButton = CustomButton(title: Constants.hideButtonTitleHide)
+    private let randomButton: UIButton = CustomButton(title: Constants.randomButtomTitle)
+    private let addWishButton: UIButton = UIButton(type: .system)
     
     // MARK: - Lyfecycle
     override func viewDidLoad() {
@@ -69,6 +74,7 @@ final class ViewController: UIViewController {
         configureButtonStack()
         configureHideButton()
         configureRandomButton()
+        configureAddWishButton()
     }
     
     private func configureTitle() {
@@ -101,34 +107,6 @@ final class ViewController: UIViewController {
         ])
     }
     
-    private func configureSliders() {
-        sliderStack.axis = .vertical
-        sliderStack.layer.cornerRadius = Constants.sliderStackCorner
-        sliderStack.clipsToBounds = true
-        sliderStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(sliderStack)
-        for view in [sliderRed, sliderGreen, sliderBlue] {
-            sliderStack.addArrangedSubview(view)
-            view.valueChanged = { [weak self] _ in
-                self?.updateBackground()
-            }
-        }
-        
-        NSLayoutConstraint.activate([
-            sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sliderStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.sliderStackLeading),
-            sliderStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.sliderStackBottom)
-        ])
-    }
-    
-    private func updateBackground() {
-        let red = sliderRed.slider.value
-        let green = sliderGreen.slider.value
-        let blue = sliderBlue.slider.value
-        view.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
-    }
-    
     private func configureButtonStack() {
         buttonStack.axis = .horizontal
         buttonStack.spacing = Constants.buttonStackSpacing
@@ -154,6 +132,50 @@ final class ViewController: UIViewController {
     
     private func configureRandomButton() {
         randomButton.addTarget(self, action: #selector (randomButtonTapped), for: .touchUpInside)
+    }
+    
+    private func configureSliders() {
+        sliderStack.axis = .vertical
+        sliderStack.layer.cornerRadius = Constants.sliderStackCorner
+        sliderStack.clipsToBounds = true
+        sliderStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(sliderStack)
+        for view in [sliderRed, sliderGreen, sliderBlue] {
+            sliderStack.addArrangedSubview(view)
+            view.valueChanged = { [weak self] _ in
+                self?.updateBackground()
+            }
+        }
+        
+        NSLayoutConstraint.activate([
+            sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            sliderStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.sliderStackLeading),
+            sliderStack.topAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.sliderStackBottom)
+        ])
+    }
+    
+    private func updateBackground() {
+        let red = sliderRed.slider.value
+        let green = sliderGreen.slider.value
+        let blue = sliderBlue.slider.value
+        view.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
+    }
+    
+    private func configureAddWishButton() {
+        addWishButton.setTitle(Constants.addWishButtonTitle, for: .normal)
+        addWishButton.setTitleColor(.systemPink, for: .normal)
+        addWishButton.backgroundColor = .white
+        addWishButton.translatesAutoresizingMaskIntoConstraints = false
+        addWishButton.layer.cornerRadius = Constants.addWishButtonCorner
+        
+        view.addSubview(addWishButton)
+        NSLayoutConstraint.activate([
+            addWishButton.heightAnchor.constraint(equalToConstant: Constants.addWishButtonHeight),
+            addWishButton.topAnchor.constraint(equalTo: sliderStack.bottomAnchor, constant: Constants.addWishButtonTopIdent),
+            addWishButton.leadingAnchor.constraint(equalTo: sliderStack.leadingAnchor),
+            addWishButton.trailingAnchor.constraint(equalTo: sliderStack.trailingAnchor),
+        ])
     }
     
     // MARK: - Actions

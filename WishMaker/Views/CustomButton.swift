@@ -11,7 +11,7 @@ class CustomButton: UIButton {
     // MARK: - Constants
     enum Constants {
         static let corner: CGFloat = 12
-        static let height: Double = 40
+        static let height: Double = 42
         
         static let fatalError: String = "init(coder:) has not been implemented"
     }
