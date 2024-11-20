@@ -12,6 +12,8 @@ class CustomButton: UIButton {
     enum Constants {
         static let corner: CGFloat = 12
         static let height: Double = 40
+        
+        static let fatalError: String = "init(coder:) has not been implemented"
     }
 
     // MARK: - Lyfecycle
@@ -22,7 +24,7 @@ class CustomButton: UIButton {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(Constants.fatalError)
     }
     
     // MARK: - Private methods
