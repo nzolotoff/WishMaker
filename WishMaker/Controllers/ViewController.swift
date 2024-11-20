@@ -19,20 +19,31 @@ final class ViewController: UIViewController {
         static let titleLabelSize: CGFloat = 32
         static let titleLabelLeading: CGFloat = 20
         static let titleLabelTop: CGFloat = 30
+        static let titleLabelText: String = "Wish Maker"
+
         
         static let descriptionLines: Int = 0
         static let descriptionLabelSize: CGFloat = 12
         static let descriptionLabelTop: CGFloat = 20
         static let descriptionLabelLeading: CGFloat = 20
+        static let descriptionLabelText: String = "This app will bring you joy and will fulfill three of your wishes! The first wish is change the background color."
         
         static let sliderStackCorner: CGFloat = 20
         static let sliderStackBottom: CGFloat = -40
         static let sliderStackLeading: CGFloat = 20
         
         static let alphaRGB: CGFloat = 1
+        
+        static let buttonStackSpacing: CGFloat = 10
+        static let buttonStackLeading: CGFloat = 20
+        static let buttonStackBottom: CGFloat = -20
+        
+        static let hideButtonTitleHide: String = "Hide sliders"
+        static let hideButtonTitleShow: String = "Show sliders"
+        static let randomButtomTitle: String = "Random color"
     }
     
-    // MARK: - Variables
+    // MARK: - Fields
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let sliderStack = UIStackView()
@@ -40,8 +51,8 @@ final class ViewController: UIViewController {
     private let sliderGreen = CustomSlider(title: Constants.green, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderBlue = CustomSlider(title: Constants.blue, min: Constants.sliderMin, max: Constants.sliderMax)
     private let buttonStack = UIStackView()
-    private let hideButton = CustomButton(title: "Hide sliders")
-    private let randomButton = CustomButton(title: "Randomize background color")
+    private let hideButton = CustomButton(title: Constants.hideButtonTitleHide)
+    private let randomButton = CustomButton(title: Constants.randomButtomTitle)
     
     // MARK: - Lyfecycle
     override func viewDidLoad() {
@@ -56,10 +67,12 @@ final class ViewController: UIViewController {
         configureDescription()
         configureSliders()
         configureButtonStack()
+        configureHideButton()
+        configureRandomButton()
     }
     
     private func configureTitle() {
-        titleLabel.text = "WishMaker"
+        titleLabel.text = Constants.titleLabelText
         titleLabel.font = UIFont.systemFont(ofSize: Constants.titleLabelSize, weight: .bold)
         titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -73,7 +86,7 @@ final class ViewController: UIViewController {
     }
     
     private func configureDescription() {
-        descriptionLabel.text = "This app will bring you joy and will fulfill three of your wishes! The first wish is change the background color."
+        descriptionLabel.text = Constants.descriptionLabelText
         descriptionLabel.font = UIFont.systemFont(ofSize: Constants.descriptionLabelSize)
         descriptionLabel.textColor = .white
         descriptionLabel.textAlignment = .center
@@ -97,6 +110,9 @@ final class ViewController: UIViewController {
         view.addSubview(sliderStack)
         for view in [sliderRed, sliderGreen, sliderBlue] {
             sliderStack.addArrangedSubview(view)
+            view.valueChanged = { [weak self] _ in
+                self?.updateBackground()
+            }
         }
         
         NSLayoutConstraint.activate([
@@ -104,18 +120,6 @@ final class ViewController: UIViewController {
             sliderStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.sliderStackLeading),
             sliderStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.sliderStackBottom)
         ])
-        
-        sliderRed.valueChanged = { [weak self] value in
-            self?.updateBackground()
-        }
-        
-        sliderGreen.valueChanged = { [weak self] value in
-            self?.updateBackground()
-        }
-        
-        sliderBlue.valueChanged = { [weak self] value in
-            self?.updateBackground()
-        }
     }
     
     private func updateBackground() {
@@ -123,12 +127,12 @@ final class ViewController: UIViewController {
         let green = sliderGreen.slider.value
         let blue = sliderBlue.slider.value
         view.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
-        
     }
     
     private func configureButtonStack() {
         buttonStack.axis = .horizontal
-        buttonStack.spacing = 10
+        buttonStack.spacing = Constants.buttonStackSpacing
+        buttonStack.distribution = .fillEqually
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         
         for button in [hideButton, randomButton] {
@@ -138,10 +142,32 @@ final class ViewController: UIViewController {
         
         view.addSubview(buttonStack)
         NSLayoutConstraint.activate([
-            buttonStack.bottomAnchor.constraint(equalTo: sliderStack.topAnchor, constant: -20),
+            buttonStack.bottomAnchor.constraint(equalTo: sliderStack.topAnchor, constant: Constants.buttonStackBottom),
             buttonStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.buttonStackLeading)
         ])
     }
+    
+    private func configureHideButton() {
+        hideButton.addTarget(self, action: #selector (hideButtonTapped), for: .touchUpInside)
+    }
+    
+    private func configureRandomButton() {
+        randomButton.addTarget(self, action: #selector (randomButtonTapped), for: .touchUpInside)
+    }
+    
+    // MARK: - Actions
+    @objc private func hideButtonTapped() {
+        if sliderStack.isHidden {
+            hideButton.setTitle(Constants.hideButtonTitleHide, for: .normal)
+            sliderStack.isHidden = false
+        } else {
+            hideButton.setTitle(Constants.hideButtonTitleShow, for: .normal)
+            sliderStack.isHidden = true
+        }
+    }
+    
+    @objc private func randomButtonTapped() {
+        view.backgroundColor = UIColor.randomColor()
+    }
 }
-
