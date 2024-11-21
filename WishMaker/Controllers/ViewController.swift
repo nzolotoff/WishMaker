@@ -168,6 +168,7 @@ final class ViewController: UIViewController {
         addWishButton.backgroundColor = .white
         addWishButton.translatesAutoresizingMaskIntoConstraints = false
         addWishButton.layer.cornerRadius = Constants.addWishButtonCorner
+        addWishButton.addTarget(self, action: #selector(addWishButtonTapped), for: .touchUpInside)
         
         view.addSubview(addWishButton)
         NSLayoutConstraint.activate([
@@ -191,5 +192,9 @@ final class ViewController: UIViewController {
     
     @objc private func randomButtonTapped() {
         view.backgroundColor = UIColor.randomColor()
+    }
+    
+    @objc private func addWishButtonTapped() {
+        present(WishStoringViewController(), animated: true)
     }
 }
