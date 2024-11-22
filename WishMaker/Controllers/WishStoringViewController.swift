@@ -10,6 +10,9 @@ import UIKit
 final class WishStoringViewController: UIViewController {
     // MARK: - Fields
     private let wishesTable: UITableView = UITableView(frame: .zero)
+    
+    // MARK: - Varibles
+    private var wishesArray: [String] = ["My first wish", "My first wish", "My first wish", "My first wish", "My first wish", "My first wish"]
 
     // MARK: - Lyfecycle
     override func viewDidLoad() {
@@ -24,11 +27,12 @@ final class WishStoringViewController: UIViewController {
     }
     
     private func configureWishesTable() {
-        wishesTable.backgroundColor = .red
+        wishesTable.backgroundColor = .white 
         wishesTable.separatorStyle = .none
         wishesTable.dataSource = self
         wishesTable.layer.cornerRadius = 20
         wishesTable.translatesAutoresizingMaskIntoConstraints = false
+        wishesTable.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
         
         view.addSubview(wishesTable)
         NSLayoutConstraint.activate([
@@ -43,10 +47,14 @@ final class WishStoringViewController: UIViewController {
 // MARK: UITableViewDataSource
 extension WishStoringViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        return wishesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: WrittenWishCell.reuseId, for: indexPath)
+        guard let wishCell = cell as? WrittenWishCell else { return cell }
+       
+        wishCell.configure(with: wishesArray[indexPath.row])
+        return wishCell
     }
 }
