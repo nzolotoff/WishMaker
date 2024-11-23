@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WrittenWishCell: UITableViewCell {
+final class WrittenWishCell: UITableViewCell {
     // MARK: - Static Fields
     static let reuseId: String = "WrittenWishCell"
     

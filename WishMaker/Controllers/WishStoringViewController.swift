@@ -27,7 +27,7 @@ final class WishStoringViewController: UIViewController {
     }
     
     private func configureWishesTable() {
-        wishesTable.backgroundColor = .white 
+        wishesTable.backgroundColor = .white
         wishesTable.separatorStyle = .none
         wishesTable.dataSource = self
         wishesTable.layer.cornerRadius = 20
@@ -46,8 +46,17 @@ final class WishStoringViewController: UIViewController {
 
 // MARK: UITableViewDataSource
 extension WishStoringViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return wishesArray.count
+        switch section {
+            case 0: return 1
+            case 1: return wishesArray.count
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
