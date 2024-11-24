@@ -33,13 +33,14 @@ final class WishStoringViewController: UIViewController {
         wishesTable.layer.cornerRadius = 20
         wishesTable.translatesAutoresizingMaskIntoConstraints = false
         wishesTable.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
+        wishesTable.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
         
         view.addSubview(wishesTable)
         NSLayoutConstraint.activate([
-            wishesTable.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            wishesTable.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            wishesTable.heightAnchor.constraint(equalToConstant: 500),
-            wishesTable.widthAnchor.constraint(equalToConstant: 300)
+            wishesTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            wishesTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            wishesTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            wishesTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
             ])
     }
 }
@@ -52,18 +53,32 @@ extension WishStoringViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-            case 0: return 1
-            case 1: return wishesArray.count
+        case 0: return 1
+        case 1: return wishesArray.count
         default:
             return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: WrittenWishCell.reuseId, for: indexPath)
-        guard let wishCell = cell as? WrittenWishCell else { return cell }
-       
-        wishCell.configure(with: wishesArray[indexPath.row])
-        return wishCell
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: AddWishCell.reuseId, for: indexPath)
+            guard let AddWishCell = cell as? AddWishCell else { return cell }
+            
+            AddWishCell.addWish = { [weak self] text in
+                self?.wishesArray.append(text)
+                self?.wishesTable.reloadData()
+            }
+            return AddWishCell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: WrittenWishCell.reuseId, for: indexPath)
+            guard let wishCell = cell as? WrittenWishCell else { return cell }
+           
+            wishCell.configure(with: wishesArray[indexPath.row])
+            return wishCell
+        default:
+            return UITableViewCell()
+        }
     }
 }

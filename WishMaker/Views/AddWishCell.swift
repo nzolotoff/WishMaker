@@ -29,11 +29,6 @@ final class AddWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Non Private Methods
-    func configureButton(with buttonIcon: UIImage) {
-        addWishButton.setImage(buttonIcon, for: .normal)
-    }
-    
     // MARK: - Private Methods
     private func configureUI() {
         selectionStyle = .none
@@ -43,15 +38,21 @@ final class AddWishCell: UITableViewCell {
             $0.translatesAutoresizingMaskIntoConstraints = false
             addSubview($0)}
         addWishButton.addTarget(self, action: #selector(addWishButtonTapped), for: .touchUpInside)
-       
+        addWishTextView.layer.cornerRadius = 8
+        addWishTextView.textColor = .systemPink
+        addWishTextView.font = .systemFont(ofSize: 16)
+        addWishTextView.layer.borderWidth = 0.5
+        
+        addWishButton.setImage((UIImage(systemName: "sparkles")), for: .normal)
+        
         NSLayoutConstraint.activate([
             addWishTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             addWishTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -50),
             addWishTextView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            addWishTextView.heightAnchor.constraint(equalToConstant: 80),
+            addWishTextView.heightAnchor.constraint(equalToConstant: 60),
             
             addWishButton.leadingAnchor.constraint(equalTo: addWishTextView.trailingAnchor, constant: 10),
-            addWishButton.topAnchor.constraint(equalTo: addWishButton.topAnchor),
+            addWishButton.topAnchor.constraint(equalTo: contentView.centerYAnchor),
             addWishButton.widthAnchor.constraint(equalToConstant: 30),
             addWishButton.heightAnchor.constraint(equalToConstant: 30)
         ])

@@ -91,8 +91,8 @@
 			children = (
 				FB22E0182CD7BD5300670890 /* CustomSlider.swift */,
 				FB22E01B2CD7F62B00670890 /* CustomButton.swift */,
-				FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */,
 				FBC1EC112CF2091D008F32FE /* AddWishCell.swift */,
+				FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
