@@ -8,12 +8,21 @@
 import UIKit
 
 final class WishStoringViewController: UIViewController {
+    // MARK: - Constants
+    enum Constants {
+        static let wishesTableCorner: CGFloat = 20
+        
+        static let wishesTableTopOffset: CGFloat = 20
+        static let wishesTableLeadingOffset: CGFloat = 10
+        static let wishesTableTrailingOffset: CGFloat = -1 * 10
+        static let wishesTableBottomOffset: CGFloat = -1 * 20
+    }
     // MARK: - Fields
     private let wishesTable: UITableView = UITableView(frame: .zero)
     
     // MARK: - Varibles
-    private var wishesArray: [String] = ["My first wish", "My first wish", "My first wish", "My first wish", "My first wish", "My first wish"]
-    private var sectionTitles: [String] = ["Adding section", "My wishes"]
+    private var wishesArray: [String] = []
+    private var sectionTitles: [String] = ["Add wish here", "My wishes"]
 
     // MARK: - Lyfecycle
     override func viewDidLoad() {
@@ -29,19 +38,20 @@ final class WishStoringViewController: UIViewController {
     
     private func configureWishesTable() {
         wishesTable.backgroundColor = .white
-        wishesTable.separatorStyle = .none
+        wishesTable.separatorStyle = .singleLine
         wishesTable.dataSource = self
-        wishesTable.layer.cornerRadius = 20
+        wishesTable.delegate = self
+        wishesTable.layer.cornerRadius = Constants.wishesTableCorner
         wishesTable.translatesAutoresizingMaskIntoConstraints = false
         wishesTable.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
         wishesTable.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
         
         view.addSubview(wishesTable)
         NSLayoutConstraint.activate([
-            wishesTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            wishesTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            wishesTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            wishesTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            wishesTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.wishesTableTopOffset),
+            wishesTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.wishesTableLeadingOffset),
+            wishesTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constants.wishesTableTrailingOffset),
+            wishesTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Constants.wishesTableBottomOffset)
             ])
     }
 }
@@ -85,5 +95,11 @@ extension WishStoringViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         sectionTitles[section]
+    }
+}
+
+extension WishStoringViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        50
     }
 }

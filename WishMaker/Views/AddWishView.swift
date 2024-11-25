@@ -8,11 +8,25 @@
 import UIKit
 
 class AddWishView: UIView {
+    // MARK: - Constants
+    enum Constants {
+        static let viewCorner: CGFloat = 8
+        
+        static let addLabelText: String = "Add"
+        static let iconImageName: String = "sparkles"
+        
+        static let stackSpacing: CGFloat = 5
+        
+        static let iconImageHeight: CGFloat = 24
+        static let iconImageWidth: CGFloat = 24
+    }
     
+    // MARK: - Fields 
     private let addLabel: UILabel = UILabel()
     private let iconImageView: UIImageView = UIImageView()
     private let myStack: UIStackView = UIStackView()
 
+    // MARK: - Lyfecycle
     init() {
         super.init(frame: .zero)
         configureUI()
@@ -23,14 +37,15 @@ class AddWishView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Private methods
     private func configureUI() {
-        layer.borderWidth = 0.5
-        layer.cornerRadius = 8
+        layer.cornerRadius = Constants.viewCorner
+        backgroundColor = .systemPink
         
-        addLabel.text = "Add"
-        addLabel.textColor = .systemPink
-        iconImageView.image = UIImage(systemName: "sparkles")
-        iconImageView.tintColor = .systemPink
+        addLabel.text = Constants.addLabelText
+        addLabel.textColor = .white
+        iconImageView.image = UIImage(systemName: Constants.iconImageName)
+        iconImageView.tintColor = .white
         [addLabel, iconImageView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
             myStack.addArrangedSubview($0)
@@ -38,14 +53,14 @@ class AddWishView: UIView {
         
         myStack.axis = .horizontal
         myStack.distribution = .equalSpacing
-        myStack.spacing = 5
+        myStack.spacing = Constants.stackSpacing
         myStack.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(myStack)
         
         NSLayoutConstraint.activate([
-            iconImageView.widthAnchor.constraint(equalToConstant: 24),
-            iconImageView.heightAnchor.constraint(equalToConstant: 24),
+            iconImageView.widthAnchor.constraint(equalToConstant: Constants.iconImageWidth),
+            iconImageView.heightAnchor.constraint(equalToConstant: Constants.iconImageHeight),
             
             myStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             myStack.centerYAnchor.constraint(equalTo: centerYAnchor)

@@ -13,15 +13,7 @@ final class AddWishCell: UITableViewCell {
         static let textViewCorner: CGFloat = 8
         static let textViewTextColor: UIColor = .systemPink
         static let textViewFontSize: CGFloat = 16
-        static let textViewBorderWidth: CGFloat = 0.5
-            
-        static let textViewLeadingOffset: CGFloat = 10
-        static let textViewTrailingOffset: CGFloat = -1 * 100
-        static let textViewTopOffset: CGFloat = 10
-        static let textViewHeight: CGFloat = 60
-        
-        static let addWishViewLeadingOffset: CGFloat = 10
-        static let addWishButtonTopOffset: CGFloat = 25
+        static let textViewBorderWidth: CGFloat = 1
     }
     
     // MARK: - Static Fields
@@ -53,24 +45,24 @@ final class AddWishCell: UITableViewCell {
         
         [addWishTextView, addWishView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            addSubview($0)
+            contentView.addSubview($0)
         }
         
         addWishTextView.layer.cornerRadius = Constants.textViewCorner
         addWishTextView.textColor = Constants.textViewTextColor
         addWishTextView.font = .systemFont(ofSize: Constants.textViewFontSize)
         addWishTextView.layer.borderWidth = Constants.textViewBorderWidth
-        
+                
         NSLayoutConstraint.activate([
-            addWishTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.textViewLeadingOffset),
-            addWishTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.textViewTrailingOffset),
-            addWishTextView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.textViewTopOffset),
-            addWishTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5),
+            addWishView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            addWishView.widthAnchor.constraint(equalToConstant: 70),
+            addWishView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            addWishView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             
-            addWishView.leadingAnchor.constraint(equalTo: addWishTextView.trailingAnchor, constant: Constants.addWishViewLeadingOffset),
-            addWishView.centerYAnchor.constraint(equalTo: addWishTextView.centerYAnchor),
-            addWishView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5),
-            addWishView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
+            addWishTextView.trailingAnchor.constraint(equalTo: addWishView.leadingAnchor, constant: -5),
+            addWishTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            addWishTextView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            addWishTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
         ])
     }
     
@@ -86,5 +78,4 @@ final class AddWishCell: UITableViewCell {
         addWish?(text)
         addWishTextView.text = ""
     }
-
 }
