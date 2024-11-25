@@ -14,18 +14,14 @@ final class AddWishCell: UITableViewCell {
         static let textViewTextColor: UIColor = .systemPink
         static let textViewFontSize: CGFloat = 16
         static let textViewBorderWidth: CGFloat = 0.5
-        
-        static let addWishButtonImageName: String = "sparkles"
-        
+            
         static let textViewLeadingOffset: CGFloat = 10
-        static let textViewTrailingOffset: CGFloat = -1 * 50
+        static let textViewTrailingOffset: CGFloat = -1 * 100
         static let textViewTopOffset: CGFloat = 10
         static let textViewHeight: CGFloat = 60
         
-        static let addWishButtonLeadingOffset: CGFloat = 10
+        static let addWishViewLeadingOffset: CGFloat = 10
         static let addWishButtonTopOffset: CGFloat = 25
-        static let addWishButtonWidth: CGFloat = 30
-        static let addWishButtonHeight: CGFloat = 30
     }
     
     // MARK: - Static Fields
@@ -33,7 +29,7 @@ final class AddWishCell: UITableViewCell {
     
     // MARK: - Fields
     private let addWishTextView: UITextView = UITextView()
-    private let addWishButton: UIButton = UIButton()
+    private let addWishView: AddWishView = AddWishView()
     
     // MARK: - Variables
     var addWish: ((String) -> Void)?
@@ -42,6 +38,7 @@ final class AddWishCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
+        addWishViewTapRecognizer()
     }
     
     @available(*, unavailable)
@@ -54,34 +51,37 @@ final class AddWishCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
         
-        [addWishTextView, addWishButton].forEach {
+        [addWishTextView, addWishView].forEach {
             $0.translatesAutoresizingMaskIntoConstraints = false
-            addSubview($0)}
+            addSubview($0)
+        }
         
         addWishTextView.layer.cornerRadius = Constants.textViewCorner
         addWishTextView.textColor = Constants.textViewTextColor
         addWishTextView.font = .systemFont(ofSize: Constants.textViewFontSize)
         addWishTextView.layer.borderWidth = Constants.textViewBorderWidth
         
-        addWishButton.setImage((UIImage(systemName: Constants.addWishButtonImageName)), for: .normal)
-        addWishButton.addTarget(self, action: #selector(addWishButtonTapped), for: .touchUpInside)
-        
         NSLayoutConstraint.activate([
             addWishTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.textViewLeadingOffset),
             addWishTextView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.textViewTrailingOffset),
             addWishTextView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.textViewTopOffset),
-            addWishTextView.heightAnchor.constraint(equalToConstant: Constants.textViewHeight),
+            addWishTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5),
             
-            addWishButton.leadingAnchor.constraint(equalTo: addWishTextView.trailingAnchor, constant: Constants.addWishButtonLeadingOffset),
-            addWishButton.topAnchor.constraint(equalTo: topAnchor, constant: Constants.addWishButtonTopOffset),
-            addWishButton.widthAnchor.constraint(equalToConstant: Constants.addWishButtonWidth),
-            addWishButton.heightAnchor.constraint(equalToConstant: Constants.addWishButtonHeight)
+            addWishView.leadingAnchor.constraint(equalTo: addWishTextView.trailingAnchor, constant: Constants.addWishViewLeadingOffset),
+            addWishView.centerYAnchor.constraint(equalTo: addWishTextView.centerYAnchor),
+            addWishView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5),
+            addWishView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
-        
+    }
+    
+    private func addWishViewTapRecognizer() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addWishViewTapped))
+        addWishView.addGestureRecognizer(tapGesture)
+        addWishView.isUserInteractionEnabled = true
     }
     
     // MARK: - Actions
-    @objc private func addWishButtonTapped() {
+    @objc private func addWishViewTapped() {
         guard let text = addWishTextView.text, !text.isEmpty else { return }
         addWish?(text)
         addWishTextView.text = ""

@@ -13,6 +13,7 @@ final class WishStoringViewController: UIViewController {
     
     // MARK: - Varibles
     private var wishesArray: [String] = ["My first wish", "My first wish", "My first wish", "My first wish", "My first wish", "My first wish"]
+    private var sectionTitles: [String] = ["Adding section", "My wishes"]
 
     // MARK: - Lyfecycle
     override func viewDidLoad() {
@@ -38,9 +39,9 @@ final class WishStoringViewController: UIViewController {
         view.addSubview(wishesTable)
         NSLayoutConstraint.activate([
             wishesTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            wishesTable.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            wishesTable.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            wishesTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+            wishesTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            wishesTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            wishesTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
             ])
     }
 }
@@ -80,5 +81,9 @@ extension WishStoringViewController: UITableViewDataSource {
         default:
             return UITableViewCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        sectionTitles[section]
     }
 }
