@@ -14,6 +14,14 @@ final class AddWishCell: UITableViewCell {
         static let textViewTextColor: UIColor = .systemPink
         static let textViewFontSize: CGFloat = 16
         static let textViewBorderWidth: CGFloat = 1
+        
+        static let addWishViewTrailingOffset: CGFloat = -1 * 10
+        static let addWishViewTopOffset: CGFloat = 5
+        static let addWishViewBottomOffset: CGFloat = -1 * 5
+        static let addWishViewWidth: CGFloat = 70
+
+        static let addWishTextViewTrailingOffset: CGFloat =  -1 * 5
+        static let addWishTextViewLeadingOffset: CGFloat = 10
     }
     
     // MARK: - Static Fields
@@ -54,15 +62,15 @@ final class AddWishCell: UITableViewCell {
         addWishTextView.layer.borderWidth = Constants.textViewBorderWidth
                 
         NSLayoutConstraint.activate([
-            addWishView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-            addWishView.widthAnchor.constraint(equalToConstant: 70),
-            addWishView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            addWishView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
+            addWishView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.addWishViewTrailingOffset),
+            addWishView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.addWishViewTopOffset),
+            addWishView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.addWishViewBottomOffset),
+            addWishView.widthAnchor.constraint(equalToConstant: Constants.addWishViewWidth),
             
-            addWishTextView.trailingAnchor.constraint(equalTo: addWishView.leadingAnchor, constant: -5),
-            addWishTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
-            addWishTextView.topAnchor.constraint(equalTo: topAnchor, constant: 5),
-            addWishTextView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5)
+            addWishTextView.trailingAnchor.constraint(equalTo: addWishView.leadingAnchor, constant: Constants.addWishTextViewTrailingOffset),
+            addWishTextView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.addWishTextViewLeadingOffset),
+            addWishTextView.topAnchor.constraint(equalTo: addWishView.topAnchor),
+            addWishTextView.bottomAnchor.constraint(equalTo: addWishView.bottomAnchor)
         ])
     }
     
