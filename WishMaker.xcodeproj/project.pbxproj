@@ -15,6 +15,8 @@
 		FB22E0192CD7BD5300670890 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22E0182CD7BD5300670890 /* CustomSlider.swift */; };
 		FB22E01C2CD7F62B00670890 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB22E01B2CD7F62B00670890 /* CustomButton.swift */; };
 		FB2AC22D2CF4976D00D5DAC3 /* AddWishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC22C2CF4976D00D5DAC3 /* AddWishView.swift */; };
+		FB2AC2332CF64D3800D5DAC3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC2322CF64D3800D5DAC3 /* DefaultsService.swift */; };
+		FB2AC2352CF6501800D5DAC3 /* WishService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC2342CF6501800D5DAC3 /* WishService.swift */; };
 		FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */; };
 		FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */; };
 		FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */; };
@@ -32,6 +34,8 @@
 		FB22E0182CD7BD5300670890 /* CustomSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
 		FB22E01B2CD7F62B00670890 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		FB2AC22C2CF4976D00D5DAC3 /* AddWishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWishView.swift; sourceTree = "<group>"; };
+		FB2AC2322CF64D3800D5DAC3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
+		FB2AC2342CF6501800D5DAC3 /* WishService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishService.swift; sourceTree = "<group>"; };
 		FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishStoringViewController.swift; sourceTree = "<group>"; };
 		FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrittenWishCell.swift; sourceTree = "<group>"; };
@@ -73,6 +77,7 @@
 				FB22E0172CD7BD3900670890 /* Views */,
 				FB22E01A2CD7BD5C00670890 /* Controllers */,
 				FB22E01D2CD802E900670890 /* Extensions */,
+				FB2AC2312CF64C4D00D5DAC3 /* Storage */,
 				FB2AC2302CF4AF1400D5DAC3 /* Other */,
 			);
 			path = WishMaker;
@@ -131,6 +136,15 @@
 				FB22E00A2CD6CBBB00670890 /* Assets.xcassets */,
 			);
 			path = Other;
+			sourceTree = "<group>";
+		};
+		FB2AC2312CF64C4D00D5DAC3 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				FB2AC2322CF64D3800D5DAC3 /* DefaultsService.swift */,
+				FB2AC2342CF6501800D5DAC3 /* WishService.swift */,
+			);
+			path = Storage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,7 +223,9 @@
 				FB22E0042CD6CBB800670890 /* SceneDelegate.swift in Sources */,
 				FB22E0192CD7BD5300670890 /* CustomSlider.swift in Sources */,
 				FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */,
+				FB2AC2332CF64D3800D5DAC3 /* DefaultsService.swift in Sources */,
 				FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */,
+				FB2AC2352CF6501800D5DAC3 /* WishService.swift in Sources */,
 				FB22E01C2CD7F62B00670890 /* CustomButton.swift in Sources */,
 				FB2AC22D2CF4976D00D5DAC3 /* AddWishView.swift in Sources */,
 				FBC1EC122CF2091D008F32FE /* AddWishCell.swift in Sources */,

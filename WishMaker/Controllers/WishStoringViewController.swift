@@ -23,6 +23,7 @@ final class WishStoringViewController: UIViewController {
     // MARK: - Varibles
     private var wishesArray: [String] = []
     private var sectionTitles: [String] = ["Add wish here", "My wishes"]
+    private var wishService: WishServiceProtocol = WishService()
 
     // MARK: - Lyfecycle
     override func viewDidLoad() {
@@ -65,7 +66,7 @@ extension WishStoringViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        case 1: return wishesArray.count
+        case 1: return wishService.getWishes().count
         default:
             return 0
         }
@@ -78,7 +79,7 @@ extension WishStoringViewController: UITableViewDataSource {
             guard let AddWishCell = cell as? AddWishCell else { return cell }
             
             AddWishCell.addWish = { [weak self] text in
-                self?.wishesArray.append(text)
+                self?.wishService.addWish(text)
                 self?.wishesTable.reloadData()
             }
             return AddWishCell
@@ -86,7 +87,7 @@ extension WishStoringViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: WrittenWishCell.reuseId, for: indexPath)
             guard let wishCell = cell as? WrittenWishCell else { return cell }
            
-            wishCell.configure(with: wishesArray[indexPath.row])
+            wishCell.configure(with: wishService.getWishes()[indexPath.row])
             return wishCell
         default:
             return UITableViewCell()
