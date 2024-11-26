@@ -10,6 +10,7 @@ import Foundation
 protocol WishServiceProtocol {
     func getWishes() -> [String]
     func addWish(_ wish: String)
+    func deleteWish(at index: Int)
 }
 
 final class WishService: WishServiceProtocol {
@@ -27,6 +28,12 @@ final class WishService: WishServiceProtocol {
     
     func addWish(_ wish: String) {
         wishes.append(wish)
+        defaultsService.saveWishes(wishes)
+    }
+    
+    func deleteWish(at index: Int) {
+        guard index >= 0 && index < wishes.count else { return }
+        wishes.remove(at: index)
         defaultsService.saveWishes(wishes)
     }
 }
