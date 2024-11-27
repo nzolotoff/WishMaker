@@ -16,6 +16,17 @@ final class WishStoringViewController: UIViewController {
         static let wishesTableLeadingOffset: CGFloat = 10
         static let wishesTableTrailingOffset: CGFloat = -1 * 10
         static let wishesTableBottomOffset: CGFloat = -1 * 20
+        
+        static let numberOfSections: Int = 2
+        static let numberOfRowsInFirstSection: Int = 1
+        static let heightForRow: CGFloat = 50
+        
+        static let actionSheetCancelTitle: String = "Cancel"
+        static let actionSheetEditTitle: String = "Edit"
+        static let actionSheetDeleteTitle: String = "Delete"
+        static let editAlertMessage: String = "Edit your wish below"
+        static let editAlertCancelTitle: String = "Cancel"
+        static let editAlertSaveTitle: String = "Save"
     }
     // MARK: - Fields
     private let wishesTable: UITableView = UITableView(frame: .zero)
@@ -60,12 +71,12 @@ final class WishStoringViewController: UIViewController {
 // MARK: UITableViewDataSource
 extension WishStoringViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        Constants.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0: return 1
+        case 0: return Constants.numberOfRowsInFirstSection
         case 1: return wishService.getWishes().count
         default:
             return 0
@@ -101,7 +112,7 @@ extension WishStoringViewController: UITableViewDataSource {
 
 extension WishStoringViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        50
+        Constants.heightForRow
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -117,5 +128,30 @@ extension WishStoringViewController: UITableViewDelegate {
             wishService.deleteWish(at: indexPath.row)
             wishesTable.reloadData()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let wishToEdit = wishService.getWishes()[indexPath.row]
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: Constants.actionSheetCancelTitle, style: .cancel))
+        actionSheet.addAction(UIAlertAction(title: Constants.actionSheetEditTitle, style: .default, handler: { [weak self] _ in
+            let editAlert = UIAlertController(title: wishToEdit, message: Constants.editAlertMessage, preferredStyle: .alert)
+            self?.present(editAlert, animated: true, completion: nil)
+            editAlert.addAction(UIAlertAction(title: Constants.editAlertCancelTitle, style: .destructive))
+            editAlert.addTextField { textField in
+                textField.text = wishToEdit
+            }
+            editAlert.addAction(UIAlertAction(title: Constants.editAlertSaveTitle, style: .default, handler: { [weak self] _ in
+                if let newWish = editAlert.textFields?.first?.text, !newWish.isEmpty {
+                    self?.wishService.editWish(at: indexPath.row, to: newWish)
+                    self?.wishesTable.reloadData()
+                }
+            }))
+        }))
+        actionSheet.addAction(UIAlertAction(title: Constants.actionSheetDeleteTitle, style: .destructive, handler: { [weak self] _ in
+            self?.wishService.deleteWish(at: indexPath.row)
+            self?.wishesTable.reloadData()
+        }))
+        present(actionSheet, animated: true, completion: nil)
     }
 }
