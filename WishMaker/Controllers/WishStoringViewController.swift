@@ -34,9 +34,19 @@ final class WishStoringViewController: UIViewController {
     // MARK: - Varibles
     private var wishesArray: [String] = []
     private var sectionTitles: [String] = ["Add wish here", "My wishes"]
-    private var wishService: WishServiceProtocol = WishService()
+    private var wishService: WishServiceProtocol
 
     // MARK: - Lyfecycle
+    init(wishService: WishServiceProtocol = WishService()) {
+        self.wishService = wishService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()

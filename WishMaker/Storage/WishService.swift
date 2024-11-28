@@ -15,12 +15,16 @@ protocol WishServiceProtocol {
 }
 
 final class WishService: WishServiceProtocol {
+    private enum Keys {
+        static let wishes: String = "userWishes"
+    }
+    
     private let defaultsService: DefaultsServiceProtocol
     private var wishes: [String] = []
     
     init(defaultsService: DefaultsServiceProtocol = DefaultsService()) {
         self.defaultsService = defaultsService
-        self.wishes = defaultsService.loadWishes()
+        self.wishes = defaultsService.loadWishes(for: Keys.wishes)
     }
     
     func getWishes() -> [String] {
@@ -29,18 +33,18 @@ final class WishService: WishServiceProtocol {
     
     func addWish(_ wish: String) {
         wishes.append(wish)
-        defaultsService.saveWishes(wishes)
+        defaultsService.saveWishes(for: Keys.wishes, wishes)
     }
     
     func editWish(at index: Int, to newWish: String) {
         guard index >= 0 && index < wishes.count else { return }
         wishes[index] = newWish
-        defaultsService.saveWishes(wishes)
+        defaultsService.saveWishes(for: Keys.wishes, wishes)
     }
     
     func deleteWish(at index: Int) {
         guard index >= 0 && index < wishes.count else { return }
         wishes.remove(at: index)
-        defaultsService.saveWishes(wishes)
+        defaultsService.saveWishes(for: Keys.wishes, wishes)
     }
 }
