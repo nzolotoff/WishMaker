@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class SlidersViewController: UIViewController {
     enum Constants {
         static let sliderMin: Double = 0
         static let sliderMax: Double = 1
