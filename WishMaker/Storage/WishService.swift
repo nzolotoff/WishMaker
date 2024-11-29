@@ -7,24 +7,24 @@
 
 import Foundation
 
-protocol WishServiceProtocol {
+enum Keys {
+    static let wishes: String = "userWishes"
+}
+
+protocol WishServiceLogic {
     func getWishes() -> [String]
     func addWish(_ wish: String)
     func editWish(at index: Int, to newWish: String)
     func deleteWish(at index: Int)
 }
 
-final class WishService: WishServiceProtocol {
-    private enum Keys {
-        static let wishes: String = "userWishes"
-    }
+final class WishService: WishServiceLogic {
+    private let defaultsService: DefaultsServiceLogic
+    private var wishes: [String]
     
-    private let defaultsService: DefaultsServiceProtocol
-    private var wishes: [String] = []
-    
-    init(defaultsService: DefaultsServiceProtocol = DefaultsService()) {
+    init(defaultsService: DefaultsServiceLogic = DefaultsService()) {
         self.defaultsService = defaultsService
-        self.wishes = defaultsService.loadWishes(for: Keys.wishes)
+        self.wishes = defaultsService.get(forKey: Keys.wishes, defaultValue: [])
     }
     
     func getWishes() -> [String] {
@@ -33,18 +33,18 @@ final class WishService: WishServiceProtocol {
     
     func addWish(_ wish: String) {
         wishes.append(wish)
-        defaultsService.saveWishes(for: Keys.wishes, wishes)
+        defaultsService.set(forKey: Keys.wishes, value: wishes)
     }
     
     func editWish(at index: Int, to newWish: String) {
         guard index >= 0 && index < wishes.count else { return }
         wishes[index] = newWish
-        defaultsService.saveWishes(for: Keys.wishes, wishes)
+        defaultsService.set(forKey: Keys.wishes, value: wishes)
     }
     
     func deleteWish(at index: Int) {
         guard index >= 0 && index < wishes.count else { return }
         wishes.remove(at: index)
-        defaultsService.saveWishes(for: Keys.wishes, wishes)
+        defaultsService.set(forKey: Keys.wishes, value: wishes)
     }
 }

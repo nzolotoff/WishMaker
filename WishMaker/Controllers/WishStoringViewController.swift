@@ -34,10 +34,10 @@ final class WishStoringViewController: UIViewController {
     // MARK: - Varibles
     private var wishesArray: [String] = []
     private var sectionTitles: [String] = ["Add wish here", "My wishes"]
-    private var wishService: WishServiceProtocol
+    private var wishService: WishServiceLogic
 
     // MARK: - Lyfecycle
-    init(wishService: WishServiceProtocol = WishService()) {
+    init(wishService: WishServiceLogic = WishService()) {
         self.wishService = wishService
         super.init(nibName: nil, bundle: nil)
     }

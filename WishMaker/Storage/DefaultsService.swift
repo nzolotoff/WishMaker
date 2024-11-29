@@ -7,18 +7,24 @@
 
 import Foundation
 
-protocol DefaultsServiceProtocol {
-    func saveWishes(for key: String, _ wishes: [String])
-    func loadWishes(for key: String) -> [String]
+protocol DefaultsServiceLogic {
+    func set<T>(forKey key: String, value: T)
+    func get<T>(forKey key: String, defaultValue: T) -> T
+    func removeObject(forKey key: String)
 }
 
-final class DefaultsService: DefaultsServiceProtocol {
+final class DefaultsService: DefaultsServiceLogic {
+    private let defaults = UserDefaults.standard
     
-    func saveWishes(for key: String, _ wishes: [String]) {
-        UserDefaults.standard.set(wishes, forKey: key)
+    func set<T>(forKey key: String, value: T) {
+        defaults.set(value, forKey: key)
     }
     
-    func loadWishes(for key: String) -> [String] {
-        UserDefaults.standard.array(forKey: key) as? [String] ?? []
+    func get<T>(forKey key: String, defaultValue: T) -> T {
+        defaults.object(forKey: key) as? T ?? defaultValue
+    }
+    
+    func removeObject(forKey key: String) {
+        defaults.removeObject(forKey: key)
     }
 }
