@@ -36,6 +36,7 @@ final class SlidersViewController: UIViewController {
         static let buttonStackSpacing: CGFloat = 10
         static let buttonStackLeading: CGFloat = 20
         static let buttonStackBottom: CGFloat = -20
+        static let buttonHeighInStack: CGFloat = 38
         
         static let hideButtonTitleHide: String = "Hide sliders"
         static let hideButtonTitleShow: String = "Show sliders"
@@ -50,13 +51,16 @@ final class SlidersViewController: UIViewController {
     // MARK: - Fields
     private let titleLabel: UILabel = UILabel()
     private let descriptionLabel: UILabel = UILabel()
-    private let sliderStack: UIStackView = UIStackView()
+    
+    private let hideButton: ColorButton = ColorButton(title: Constants.hideButtonTitleHide)
+    private let randomButton: ColorButton = ColorButton(title: Constants.randomButtomTitle)
+    private let buttonStack: UIStackView = UIStackView()
+    
     private let sliderRed: CustomSlider = CustomSlider(title: Constants.red, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderGreen: CustomSlider = CustomSlider(title: Constants.green, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderBlue: CustomSlider = CustomSlider(title: Constants.blue, min: Constants.sliderMin, max: Constants.sliderMax)
-    private let buttonStack: UIStackView = UIStackView()
-    private let hideButton: UIButton = CustomButton(title: Constants.hideButtonTitleHide)
-    private let randomButton: UIButton = CustomButton(title: Constants.randomButtomTitle)
+    private let sliderStack: UIStackView = UIStackView()
+
     private let addWishButton: UIButton = UIButton(type: .system)
     
     // MARK: - Lyfecycle
@@ -67,13 +71,10 @@ final class SlidersViewController: UIViewController {
     // MARK: - Private methods
     private func configureUI() {
         view.backgroundColor = .cyan
-        
         configureTitle()
         configureDescription()
         configureSliders()
         configureButtonStack()
-        configureHideButton()
-        configureRandomButton()
         configureAddWishButton()
     }
     
@@ -113,8 +114,11 @@ final class SlidersViewController: UIViewController {
         buttonStack.distribution = .fillEqually
         buttonStack.translatesAutoresizingMaskIntoConstraints = false
         
+        setActionForHideButton()
+        setActionForRandomButton()
         for button in [hideButton, randomButton] {
             button.translatesAutoresizingMaskIntoConstraints = false
+            button.heightAnchor.constraint(equalToConstant: Constants.buttonHeighInStack).isActive = true
             buttonStack.addArrangedSubview(button)
         }
         
@@ -124,14 +128,6 @@ final class SlidersViewController: UIViewController {
             buttonStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.buttonStackLeading)
         ])
-    }
-    
-    private func configureHideButton() {
-        hideButton.addTarget(self, action: #selector (hideButtonTapped), for: .touchUpInside)
-    }
-    
-    private func configureRandomButton() {
-        randomButton.addTarget(self, action: #selector (randomButtonTapped), for: .touchUpInside)
     }
     
     private func configureSliders() {
@@ -144,7 +140,7 @@ final class SlidersViewController: UIViewController {
         for view in [sliderRed, sliderGreen, sliderBlue] {
             sliderStack.addArrangedSubview(view)
             view.valueChanged = { [weak self] _ in
-                self?.updateBackground()
+                self?.updateBackgroundColor()
             }
         }
         
@@ -153,13 +149,6 @@ final class SlidersViewController: UIViewController {
             sliderStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.sliderStackLeading),
             sliderStack.topAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.sliderStackBottom)
         ])
-    }
-    
-    private func updateBackground() {
-        let red = sliderRed.slider.value
-        let green = sliderGreen.slider.value
-        let blue = sliderBlue.slider.value
-        view.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
     }
     
     private func configureAddWishButton() {
@@ -180,18 +169,30 @@ final class SlidersViewController: UIViewController {
     }
     
     // MARK: - Actions
-    @objc private func hideButtonTapped() {
-        if sliderStack.isHidden {
-            hideButton.setTitle(Constants.hideButtonTitleHide, for: .normal)
-            sliderStack.isHidden = false
-        } else {
-            hideButton.setTitle(Constants.hideButtonTitleShow, for: .normal)
-            sliderStack.isHidden = true
+    private func setActionForHideButton() {
+        hideButton.action = { [weak self] in
+            guard let self else { return }
+            if self.sliderStack.isHidden {
+                self.hideButton.button.setTitle(Constants.hideButtonTitleHide, for: .normal)
+                self.sliderStack.isHidden = false
+            } else {
+                self.hideButton.button.setTitle(Constants.hideButtonTitleShow, for: .normal)
+                self.sliderStack.isHidden = true
+            }
         }
     }
     
-    @objc private func randomButtonTapped() {
-        view.backgroundColor = UIColor.randomColor()
+    private func setActionForRandomButton() {
+        randomButton.action = { [weak self] in
+            self?.view.backgroundColor = UIColor.randomColor()
+        }
+    }
+    
+    private func updateBackgroundColor() {
+        let red = sliderRed.slider.value
+        let green = sliderGreen.slider.value
+        let blue = sliderBlue.slider.value
+        view.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
     }
     
     @objc private func addWishButtonTapped() {

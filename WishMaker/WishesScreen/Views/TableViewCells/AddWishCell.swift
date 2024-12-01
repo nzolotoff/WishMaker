@@ -18,10 +18,10 @@ final class AddWishCell: UITableViewCell {
         static let addWishViewTrailingOffset: CGFloat = -1 * 10
         static let addWishViewTopOffset: CGFloat = 5
         static let addWishViewBottomOffset: CGFloat = -1 * 5
-        static let addWishViewWidth: CGFloat = 70
+        static let addWishViewWidth: CGFloat = 85
 
         static let addWishTextViewTrailingOffset: CGFloat =  -1 * 5
-        static let addWishTextViewLeadingOffset: CGFloat = 10
+        static let addWishTextViewLeadingOffset: CGFloat = 15
     }
     
     // MARK: - Static Fields
