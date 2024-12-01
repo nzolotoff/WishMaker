@@ -17,7 +17,8 @@ final class WrittenWishCell: UITableViewCell {
         static let wrapCorner: CGFloat = 16
         static let wrapOffsetV: CGFloat = 5
         static let wrapOffsetH: CGFloat = 10
-        static let wishLabelOffset: CGFloat = 8
+        static let wishLabelLeadingOffset: CGFloat = 12
+        static let wishLabelTopOffset: CGFloat = 8
     }
     
     // MARK: - Fields
@@ -58,8 +59,10 @@ final class WrittenWishCell: UITableViewCell {
         
         wrap.addSubview(wishLabel)
         wishLabel.translatesAutoresizingMaskIntoConstraints = false
+        wishLabel.textColor = .systemPink
         NSLayoutConstraint.activate([
-            wishLabel.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: Constants.wishLabelOffset),
+            wishLabel.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: Constants.wishLabelLeadingOffset),
+            wishLabel.topAnchor.constraint(equalTo: wrap.topAnchor, constant: Constants.wishLabelTopOffset)
         ])
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 class AddWishView: UIView {
     // MARK: - Constants
     enum Constants {
-        static let viewCorner: CGFloat = 8
+        static let viewCorner: CGFloat = 12
         
         static let addLabelText: String = "Add"
         static let iconImageName: String = "sparkles"

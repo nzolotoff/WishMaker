@@ -60,7 +60,7 @@ final class WishStoringViewController: UIViewController {
     
     private func configureWishesTable() {
         wishesTable.backgroundColor = .white
-        wishesTable.separatorStyle = .singleLine
+        wishesTable.separatorStyle = .none
         wishesTable.dataSource = self
         wishesTable.delegate = self
         wishesTable.layer.cornerRadius = Constants.wishesTableCorner
@@ -120,6 +120,7 @@ extension WishStoringViewController: UITableViewDataSource {
     }
 }
 
+// MARK: UITableViewDelegate
 extension WishStoringViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.heightForRow
@@ -130,7 +131,10 @@ extension WishStoringViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        .delete
+        switch indexPath.section {
+        case 1: return .delete
+        default: return .none
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -141,27 +145,29 @@ extension WishStoringViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let wishToEdit = wishService.getWishes()[indexPath.row]
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: Constants.actionSheetCancelTitle, style: .cancel))
-        actionSheet.addAction(UIAlertAction(title: Constants.actionSheetEditTitle, style: .default, handler: { [weak self] _ in
-            let editAlert = UIAlertController(title: wishToEdit, message: Constants.editAlertMessage, preferredStyle: .alert)
-            self?.present(editAlert, animated: true, completion: nil)
-            editAlert.addAction(UIAlertAction(title: Constants.editAlertCancelTitle, style: .destructive))
-            editAlert.addTextField { textField in
-                textField.text = wishToEdit
-            }
-            editAlert.addAction(UIAlertAction(title: Constants.editAlertSaveTitle, style: .default, handler: { [weak self] _ in
-                if let newWish = editAlert.textFields?.first?.text, !newWish.isEmpty {
-                    self?.wishService.editWish(at: indexPath.row, to: newWish)
-                    self?.wishesTable.reloadData()
+        if indexPath.section == 1 {
+            let wishToEdit = wishService.getWishes()[indexPath.row]
+            let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+            actionSheet.addAction(UIAlertAction(title: Constants.actionSheetCancelTitle, style: .cancel))
+            actionSheet.addAction(UIAlertAction(title: Constants.actionSheetEditTitle, style: .default, handler: { [weak self] _ in
+                let editAlert = UIAlertController(title: wishToEdit, message: Constants.editAlertMessage, preferredStyle: .alert)
+                self?.present(editAlert, animated: true, completion: nil)
+                editAlert.addAction(UIAlertAction(title: Constants.editAlertCancelTitle, style: .destructive))
+                editAlert.addTextField { textField in
+                    textField.text = wishToEdit
                 }
+                editAlert.addAction(UIAlertAction(title: Constants.editAlertSaveTitle, style: .default, handler: { [weak self] _ in
+                    if let newWish = editAlert.textFields?.first?.text, !newWish.isEmpty {
+                        self?.wishService.editWish(at: indexPath.row, to: newWish)
+                        self?.wishesTable.reloadData()
+                    }
+                }))
             }))
-        }))
-        actionSheet.addAction(UIAlertAction(title: Constants.actionSheetDeleteTitle, style: .destructive, handler: { [weak self] _ in
-            self?.wishService.deleteWish(at: indexPath.row)
-            self?.wishesTable.reloadData()
-        }))
-        present(actionSheet, animated: true, completion: nil)
+            actionSheet.addAction(UIAlertAction(title: Constants.actionSheetDeleteTitle, style: .destructive, handler: { [weak self] _ in
+                self?.wishService.deleteWish(at: indexPath.row)
+                self?.wishesTable.reloadData()
+            }))
+            present(actionSheet, animated: true, completion: nil)
+        }
     }
 }

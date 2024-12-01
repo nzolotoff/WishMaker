@@ -10,7 +10,7 @@ import UIKit
 final class AddWishCell: UITableViewCell {
     // MARK: - Constants
     enum Constants {
-        static let textViewCorner: CGFloat = 8
+        static let textViewCorner: CGFloat = 12
         static let textViewTextColor: UIColor = .systemPink
         static let textViewFontSize: CGFloat = 16
         static let textViewBorderWidth: CGFloat = 1
@@ -60,6 +60,7 @@ final class AddWishCell: UITableViewCell {
         addWishTextView.textColor = Constants.textViewTextColor
         addWishTextView.font = .systemFont(ofSize: Constants.textViewFontSize)
         addWishTextView.layer.borderWidth = Constants.textViewBorderWidth
+        addWishTextView.layer.borderColor = UIColor.systemPink.cgColor
                 
         NSLayoutConstraint.activate([
             addWishView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.addWishViewTrailingOffset),
