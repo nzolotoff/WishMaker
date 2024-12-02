@@ -1,47 +1,61 @@
 //
-//  ViewController.swift
+//  WishMakerView.swift
 //  WishMaker
 //
-//  Created by Nikita Zolotov on 03.11.2024.
+//  Created by Nikita Zolotov on 02.12.2024.
 //
 
 import UIKit
 
-final class SlidersViewController: UIViewController {
+protocol WishMakerViewDelegate: AnyObject {
+    func addWishWasPressed()
+}
+
+class WishMakerView: UIView {
     enum Constants {
+        
+        // min/max values for sliders
         static let sliderMin: Double = 0
         static let sliderMax: Double = 1
         
+        // colors
         static let red: String = "Red"
         static let green: String = "Green"
         static let blue: String = "Blue"
+        static let alphaRGB: CGFloat = 1
         
+        // title label
         static let titleLabelSize: CGFloat = 32
         static let titleLabelLeading: CGFloat = 20
         static let titleLabelTop: CGFloat = 30
         static let titleLabelText: String = "Wish Maker"
         
+        // description label
         static let descriptionLines: Int = 0
         static let descriptionLabelSize: CGFloat = 12
         static let descriptionLabelTop: CGFloat = 20
         static let descriptionLabelLeading: CGFloat = 20
         static let descriptionLabelText: String = "This app will bring you joy and will fulfill three of your wishes! The first wish is change the background color."
         
+        // sliders stack
         static let sliderStackCorner: CGFloat = 20
         static let sliderStackBottom: CGFloat = -340
         static let sliderStackLeading: CGFloat = 20
         
-        static let alphaRGB: CGFloat = 1
-        
+        // color buttons stack
         static let buttonStackSpacing: CGFloat = 10
         static let buttonStackLeading: CGFloat = 20
         static let buttonStackBottom: CGFloat = -20
         static let buttonHeighInStack: CGFloat = 38
         
+        // hide button
         static let hideButtonTitleHide: String = "Hide sliders"
         static let hideButtonTitleShow: String = "Show sliders"
+        
+        // random button
         static let randomButtomTitle: String = "Random color"
         
+        // add wish button
         static let addWishButtonTitle: String = "My wishes"
         static let addWishButtonCorner: CGFloat = 20
         static let addWishButtonTopIdent: CGFloat = 20
@@ -63,18 +77,27 @@ final class SlidersViewController: UIViewController {
 
     private let addWishButton: UIButton = UIButton(type: .system)
     
+    weak var delegate: WishMakerViewDelegate?
+    
+    
     // MARK: - Lyfecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init () {
+        super.init(frame: .zero)
         configureUI()
     }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Private methods
     private func configureUI() {
-        view.backgroundColor = .cyan
+        backgroundColor = .cyan
         configureTitle()
         configureDescription()
-        configureSliders()
-        configureButtonStack()
+        configureSlidersStack()
+        configureColorButtonsStack()
         configureAddWishButton()
     }
     
@@ -84,11 +107,11 @@ final class SlidersViewController: UIViewController {
         titleLabel.textColor = .white
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(titleLabel)
+        addSubview(titleLabel)
         NSLayoutConstraint.activate([
-            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.titleLabelLeading),
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.titleLabelTop)
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.titleLabelLeading),
+            titleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.titleLabelTop)
         ])
     }
     
@@ -100,15 +123,15 @@ final class SlidersViewController: UIViewController {
         descriptionLabel.numberOfLines = Constants.descriptionLines
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(descriptionLabel)
+        addSubview(descriptionLabel)
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.descriptionLabelTop),
-            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.descriptionLabelLeading)
+            descriptionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.descriptionLabelLeading)
         ])
     }
     
-    private func configureButtonStack() {
+    private func configureColorButtonsStack() {
         buttonStack.axis = .horizontal
         buttonStack.spacing = Constants.buttonStackSpacing
         buttonStack.distribution = .fillEqually
@@ -122,21 +145,21 @@ final class SlidersViewController: UIViewController {
             buttonStack.addArrangedSubview(button)
         }
         
-        view.addSubview(buttonStack)
+        addSubview(buttonStack)
         NSLayoutConstraint.activate([
             buttonStack.bottomAnchor.constraint(equalTo: sliderStack.topAnchor, constant: Constants.buttonStackBottom),
-            buttonStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            buttonStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.buttonStackLeading)
+            buttonStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            buttonStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.buttonStackLeading)
         ])
     }
     
-    private func configureSliders() {
+    private func configureSlidersStack() {
         sliderStack.axis = .vertical
         sliderStack.layer.cornerRadius = Constants.sliderStackCorner
         sliderStack.clipsToBounds = true
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(sliderStack)
+        addSubview(sliderStack)
         for view in [sliderRed, sliderGreen, sliderBlue] {
             sliderStack.addArrangedSubview(view)
             view.valueChanged = { [weak self] _ in
@@ -145,9 +168,9 @@ final class SlidersViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            sliderStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sliderStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.sliderStackLeading),
-            sliderStack.topAnchor.constraint(equalTo: view.bottomAnchor, constant: Constants.sliderStackBottom)
+            sliderStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            sliderStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.sliderStackLeading),
+            sliderStack.topAnchor.constraint(equalTo: bottomAnchor, constant: Constants.sliderStackBottom)
         ])
     }
     
@@ -159,7 +182,7 @@ final class SlidersViewController: UIViewController {
         addWishButton.layer.cornerRadius = Constants.addWishButtonCorner
         addWishButton.addTarget(self, action: #selector(addWishButtonTapped), for: .touchUpInside)
         
-        view.addSubview(addWishButton)
+        addSubview(addWishButton)
         NSLayoutConstraint.activate([
             addWishButton.heightAnchor.constraint(equalToConstant: Constants.addWishButtonHeight),
             addWishButton.topAnchor.constraint(equalTo: sliderStack.bottomAnchor, constant: Constants.addWishButtonTopIdent),
@@ -167,7 +190,7 @@ final class SlidersViewController: UIViewController {
             addWishButton.trailingAnchor.constraint(equalTo: sliderStack.trailingAnchor),
         ])
     }
-    
+ 
     // MARK: - Actions
     private func setActionForHideButton() {
         hideButton.action = { [weak self] in
@@ -184,7 +207,7 @@ final class SlidersViewController: UIViewController {
     
     private func setActionForRandomButton() {
         randomButton.action = { [weak self] in
-            self?.view.backgroundColor = UIColor.randomColor()
+            self?.backgroundColor = UIColor.randomColor()
         }
     }
     
@@ -192,10 +215,10 @@ final class SlidersViewController: UIViewController {
         let red = sliderRed.slider.value
         let green = sliderGreen.slider.value
         let blue = sliderBlue.slider.value
-        view.backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
+        backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
     }
     
     @objc private func addWishButtonTapped() {
-        present(WishStoringViewController(), animated: true)
+        delegate?.addWishWasPressed()
     }
 }
