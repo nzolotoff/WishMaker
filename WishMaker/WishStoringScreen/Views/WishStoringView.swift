@@ -1,13 +1,17 @@
 //
-//  WishStoringViewController.swift
+//  WishStoringView.swift
 //  WishMaker
 //
-//  Created by Nikita Zolotov on 21.11.2024.
+//  Created by Nikita Zolotov on 03.12.2024.
 //
 
 import UIKit
 
-final class WishStoringViewController: UIViewController {
+protocol WishStoringViewDelegate: AnyObject, WishServiceLogic {
+    func presentAlert(alert: UIAlertController)
+}
+
+class WishStoringView: UIView {
     // MARK: - Constants
     enum Constants {
         static let wishesTableCorner: CGFloat = 20
@@ -34,12 +38,12 @@ final class WishStoringViewController: UIViewController {
     // MARK: - Varibles
     private var wishesArray: [String] = []
     private var sectionTitles: [String] = ["Add wish here", "My wishes"]
-    private var wishService: WishServiceLogic
+    var delegate: WishStoringViewDelegate?
 
     // MARK: - Lyfecycle
-    init(wishService: WishServiceLogic = WishService()) {
-        self.wishService = wishService
-        super.init(nibName: nil, bundle: nil)
+    init() {
+        super.init(frame: .zero)
+        configureUI()
     }
     
     @available(*, unavailable)
@@ -47,14 +51,9 @@ final class WishStoringViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUI()
-    }
-    
     // MARK: - Private methods
     private func configureUI() {
-        view.backgroundColor = .cyan
+        backgroundColor = .systemPink
         configureWishesTable()
     }
     
@@ -68,18 +67,18 @@ final class WishStoringViewController: UIViewController {
         wishesTable.register(WrittenWishCell.self, forCellReuseIdentifier: WrittenWishCell.reuseId)
         wishesTable.register(AddWishCell.self, forCellReuseIdentifier: AddWishCell.reuseId)
         
-        view.addSubview(wishesTable)
+        addSubview(wishesTable)
         NSLayoutConstraint.activate([
-            wishesTable.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Constants.wishesTableTopOffset),
-            wishesTable.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.wishesTableLeadingOffset),
-            wishesTable.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constants.wishesTableTrailingOffset),
-            wishesTable.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Constants.wishesTableBottomOffset)
+            wishesTable.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.wishesTableTopOffset),
+            wishesTable.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.wishesTableLeadingOffset),
+            wishesTable.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.wishesTableTrailingOffset),
+            wishesTable.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: Constants.wishesTableBottomOffset)
             ])
     }
 }
 
 // MARK: UITableViewDataSource
-extension WishStoringViewController: UITableViewDataSource {
+extension WishStoringView: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         Constants.numberOfSections
     }
@@ -87,7 +86,7 @@ extension WishStoringViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return Constants.numberOfRowsInFirstSection
-        case 1: return wishService.getWishes().count
+        case 1: return delegate?.getWishes().count ?? 0
         default:
             return 0
         }
@@ -100,7 +99,7 @@ extension WishStoringViewController: UITableViewDataSource {
             guard let AddWishCell = cell as? AddWishCell else { return cell }
             
             AddWishCell.addWish = { [weak self] text in
-                self?.wishService.addWish(text)
+                self?.delegate?.addWish(text)
                 self?.wishesTable.reloadData()
             }
             return AddWishCell
@@ -108,7 +107,7 @@ extension WishStoringViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: WrittenWishCell.reuseId, for: indexPath)
             guard let wishCell = cell as? WrittenWishCell else { return cell }
            
-            wishCell.configure(with: wishService.getWishes()[indexPath.row])
+            wishCell.configure(with: delegate?.getWishes()[indexPath.row] ?? "")
             return wishCell
         default:
             return UITableViewCell()
@@ -121,7 +120,7 @@ extension WishStoringViewController: UITableViewDataSource {
 }
 
 // MARK: UITableViewDelegate
-extension WishStoringViewController: UITableViewDelegate {
+extension WishStoringView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         Constants.heightForRow
     }
@@ -139,35 +138,35 @@ extension WishStoringViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            wishService.deleteWish(at: indexPath.row)
+            delegate?.deleteWish(at: indexPath.row)
             wishesTable.reloadData()
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 1 {
-            let wishToEdit = wishService.getWishes()[indexPath.row]
+            let wishToEdit = delegate?.getWishes()[indexPath.row]
             let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
             actionSheet.addAction(UIAlertAction(title: Constants.actionSheetCancelTitle, style: .cancel))
             actionSheet.addAction(UIAlertAction(title: Constants.actionSheetEditTitle, style: .default, handler: { [weak self] _ in
                 let editAlert = UIAlertController(title: wishToEdit, message: Constants.editAlertMessage, preferredStyle: .alert)
-                self?.present(editAlert, animated: true, completion: nil)
+                self?.delegate?.presentAlert(alert: editAlert)
                 editAlert.addAction(UIAlertAction(title: Constants.editAlertCancelTitle, style: .destructive))
                 editAlert.addTextField { textField in
                     textField.text = wishToEdit
                 }
                 editAlert.addAction(UIAlertAction(title: Constants.editAlertSaveTitle, style: .default, handler: { [weak self] _ in
                     if let newWish = editAlert.textFields?.first?.text, !newWish.isEmpty {
-                        self?.wishService.editWish(at: indexPath.row, to: newWish)
+                        self?.delegate?.editWish(at: indexPath.row, to: newWish)
                         self?.wishesTable.reloadData()
                     }
                 }))
             }))
             actionSheet.addAction(UIAlertAction(title: Constants.actionSheetDeleteTitle, style: .destructive, handler: { [weak self] _ in
-                self?.wishService.deleteWish(at: indexPath.row)
+                self?.delegate?.deleteWish(at: indexPath.row)
                 self?.wishesTable.reloadData()
             }))
-            present(actionSheet, animated: true, completion: nil)
+            delegate?.presentAlert(alert: actionSheet)
         }
     }
 }
