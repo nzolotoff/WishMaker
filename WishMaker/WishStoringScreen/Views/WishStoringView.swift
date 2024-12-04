@@ -38,7 +38,7 @@ class WishStoringView: UIView {
     // MARK: - Varibles
     private var wishesArray: [String] = []
     private var sectionTitles: [String] = ["Add wish here", "My wishes"]
-    var delegate: WishStoringViewDelegate?
+    weak var delegate: WishStoringViewDelegate?
 
     // MARK: - Lyfecycle
     init() {
@@ -53,12 +53,12 @@ class WishStoringView: UIView {
     
     // MARK: - Private methods
     private func configureUI() {
-        backgroundColor = .systemPink
+        backgroundColor = .white
         configureWishesTable()
     }
     
     private func configureWishesTable() {
-        wishesTable.backgroundColor = .white
+        wishesTable.backgroundColor = .clear
         wishesTable.separatorStyle = .none
         wishesTable.dataSource = self
         wishesTable.delegate = self
