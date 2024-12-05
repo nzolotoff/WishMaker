@@ -31,6 +31,10 @@ final class WishStoringViewController: UIViewController {
 
 // MARK: - WishStoringViewDelegate
 extension WishStoringViewController: WishStoringViewDelegate {
+    func dismiss() {
+        dismiss(animated: true)
+    }
+    
     func getWishes() -> [String] {
         wishService.getWishes()
     }

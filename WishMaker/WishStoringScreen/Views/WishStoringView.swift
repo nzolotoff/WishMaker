@@ -9,14 +9,18 @@ import UIKit
 
 protocol WishStoringViewDelegate: AnyObject, WishServiceLogic {
     func presentAlert(alert: UIAlertController)
+    func dismiss()
 }
 
 class WishStoringView: UIView {
     // MARK: - Constants
     enum Constants {
-        static let wishesTableCorner: CGFloat = 20
+        static let closeButtonName: String = "xmark.circle.fill"
+        static let closeButtonBottomOffset: CGFloat = 20
+        static let closeButtonLeadingOffset: CGFloat = -1 * 35
         
-        static let wishesTableTopOffset: CGFloat = 20
+        static let wishesTableCorner: CGFloat = 20
+        static let wishesTableTopOffset: CGFloat = 30
         static let wishesTableLeadingOffset: CGFloat = 10
         static let wishesTableTrailingOffset: CGFloat = -1 * 10
         static let wishesTableBottomOffset: CGFloat = -1 * 20
@@ -34,6 +38,8 @@ class WishStoringView: UIView {
     }
     // MARK: - Fields
     private let wishesTable: UITableView = UITableView(frame: .zero)
+    private let closeButton: UIButton = UIButton(type: .system)
+    
     
     // MARK: - Varibles
     private var wishesArray: [String] = []
@@ -55,6 +61,20 @@ class WishStoringView: UIView {
     private func configureUI() {
         backgroundColor = .white
         configureWishesTable()
+        configureCloseButton()
+    }
+    
+    private func configureCloseButton() {
+        closeButton.setImage(UIImage(systemName: Constants.closeButtonName), for: .normal)
+        closeButton.tintColor = .systemGray
+        closeButton.addTarget(self, action: #selector(closeButtonWasTapped), for: .touchUpInside)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(closeButton)
+        
+        NSLayoutConstraint.activate([
+            closeButton.bottomAnchor.constraint(equalTo: wishesTable.topAnchor, constant: Constants.closeButtonBottomOffset),
+            closeButton.leadingAnchor.constraint(equalTo: wishesTable.trailingAnchor, constant: Constants.closeButtonLeadingOffset)
+        ])
     }
     
     private func configureWishesTable() {
@@ -168,5 +188,9 @@ extension WishStoringView: UITableViewDelegate {
             }))
             delegate?.presentAlert(alert: actionSheet)
         }
+    }
+    
+    @objc private func closeButtonWasTapped() {
+        delegate?.dismiss()
     }
 }
