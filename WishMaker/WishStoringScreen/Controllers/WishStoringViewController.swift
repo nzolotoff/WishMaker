@@ -10,48 +10,64 @@ import UIKit
 final class WishStoringViewController: UIViewController {
     // MARK: - Fields
     private let wishStoringView: WishStoringView = WishStoringView()
-    private var wishService: WishServiceLogic
+    private var wishManager = WishCoreDataManager.shared
     
     // MARK: - Lyfecycle
-    init(wishService: WishServiceLogic = WishService()) {
-        self.wishService = wishService
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func loadView() {
         self.view = wishStoringView
         wishStoringView.delegate = self
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
     }
 }
 
 // MARK: - WishStoringViewDelegate
 extension WishStoringViewController: WishStoringViewDelegate {
+    func shareWishes() {
+        if case .success(let wishes) = wishManager.fetchWishes() {
+            let wishesArray = wishes.map(\.title)
+            let wishesTitlesToShare = wishesArray.compactMap { $0 }
+            print(wishesTitlesToShare)
+            let activityController = UIActivityViewController(activityItems: ["\(wishesTitlesToShare)"], applicationActivities: nil)
+            present(activityController, animated: true)
+        }
+    }
+    
     func dismiss() {
         dismiss(animated: true)
     }
     
-    func getWishes() -> [String] {
-        wishService.getWishes()
+    func presentAlert(alert: UIAlertController) {
+        present(alert, animated: true, completion: nil)
     }
     
-    func addWish(_ wish: String) {
-        wishService.addWish(wish)
+    func addWish(id: Int, _ wish: String) {
+        do {
+            try wishManager.createWish(withId: Int16(id), title: wish)
+        } catch {
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            presentAlert(alert: alert)
+        }
+    }
+    
+    func getWishes() -> [String] {
+        let wishes = wishManager.fetchWishes()
+        var wishTitles = [String]()
+        if case .success(let wishes) = wishes {
+            wishes.forEach { wish in
+                wishTitles.append(wish.title ?? "")
+            }
+            return wishTitles
+        }
+        return []
     }
     
     func editWish(at index: Int, to newWish: String) {
-        wishService.editWish(at: index, to: newWish)
+        wishManager.updateWish(withId: Int16(index), to: newWish)
     }
     
     func deleteWish(at index: Int) {
-        wishService.deleteWish(at: index)
-    }
-    
-    func presentAlert(alert: UIAlertController) {
-        present(alert, animated: true, completion: nil)
+        wishManager.deleteWish(withId: Int16(index))
     }
 }

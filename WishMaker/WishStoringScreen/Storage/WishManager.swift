@@ -11,18 +11,18 @@ enum Keys {
     static let wishes: String = "userWishes"
 }
 
-protocol WishServiceLogic {
+protocol WishManagerLogic {
     func getWishes() -> [String]
     func addWish(_ wish: String)
     func editWish(at index: Int, to newWish: String)
     func deleteWish(at index: Int)
 }
 
-final class WishService: WishServiceLogic {
-    private let defaultsService: DefaultsServiceLogic
+final class WishManager: WishManagerLogic {
+    private let defaultsService: DefaultsManagerLogic
     private var wishes: [String]
     
-    init(defaultsService: DefaultsServiceLogic = DefaultsService()) {
+    init(defaultsService: DefaultsManagerLogic = DefaultsManager()) {
         self.defaultsService = defaultsService
         self.wishes = defaultsService.get(forKey: Keys.wishes, defaultValue: [])
     }

@@ -7,16 +7,22 @@
 
 import UIKit
 
-protocol WishStoringViewDelegate: AnyObject, WishServiceLogic {
+protocol WishStoringViewDelegate: AnyObject {
     func presentAlert(alert: UIAlertController)
+    func shareWishes()
     func dismiss()
+    
+    func addWish(id: Int, _ wish: String)
+    func getWishes() -> [String]
+    func editWish(at index: Int, to newWish: String)
+    func deleteWish(at index: Int)
 }
 
 class WishStoringView: UIView {
     // MARK: - Constants
     enum Constants {
         static let closeButtonName: String = "xmark.circle.fill"
-        static let closeButtonBottomOffset: CGFloat = 20
+        static let closeButtonBottomOffset: CGFloat = 15
         static let closeButtonLeadingOffset: CGFloat = -1 * 35
         
         static let wishesTableCorner: CGFloat = 20
@@ -39,6 +45,7 @@ class WishStoringView: UIView {
     // MARK: - Fields
     private let wishesTable: UITableView = UITableView(frame: .zero)
     private let closeButton: UIButton = UIButton(type: .system)
+    private let shareButton: UIButton = UIButton(type: .system)
     
     
     // MARK: - Varibles
@@ -62,6 +69,20 @@ class WishStoringView: UIView {
         backgroundColor = .white
         configureWishesTable()
         configureCloseButton()
+        configureShareButton()
+    }
+    
+    private func configureShareButton() {
+        shareButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
+        shareButton.tintColor = .systemGray
+        shareButton.addTarget(self, action: #selector(shareButtonWasTapped), for: .touchUpInside)
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(shareButton)
+        NSLayoutConstraint.activate([
+            shareButton.bottomAnchor.constraint(equalTo: closeButton.bottomAnchor),
+            shareButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 30)
+        ])
     }
     
     private func configureCloseButton() {
@@ -119,7 +140,7 @@ extension WishStoringView: UITableViewDataSource {
             guard let AddWishCell = cell as? AddWishCell else { return cell }
             
             AddWishCell.addWish = { [weak self] text in
-                self?.delegate?.addWish(text)
+                self?.delegate?.addWish(id: indexPath.row, text)
                 self?.wishesTable.reloadData()
             }
             return AddWishCell
@@ -179,6 +200,9 @@ extension WishStoringView: UITableViewDelegate {
                     if let newWish = editAlert.textFields?.first?.text, !newWish.isEmpty {
                         self?.delegate?.editWish(at: indexPath.row, to: newWish)
                         self?.wishesTable.reloadData()
+                    } else if editAlert.textFields?.first?.text?.isEmpty == true {
+                        self?.delegate?.deleteWish(at: indexPath.row)
+                        self?.wishesTable.reloadData()
                     }
                 }))
             }))
@@ -192,5 +216,9 @@ extension WishStoringView: UITableViewDelegate {
     
     @objc private func closeButtonWasTapped() {
         delegate?.dismiss()
+    }
+    
+    @objc private func shareButtonWasTapped() {
+        delegate?.shareWishes()
     }
 }

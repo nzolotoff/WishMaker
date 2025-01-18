@@ -17,7 +17,7 @@ class ColorButton: UIView {
         static let fatalError: String = "init(coder:) has not been implemented"
     }
     
-    // MARK: - Properties
+    // MARK: - Variables
     var action: (() -> Void)?
     
     // MARK: - Fields
@@ -50,6 +50,7 @@ class ColorButton: UIView {
         button.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
     }
     
+    // MARK: - Actions
     @objc private func buttonWasTapped() {
         action?()
     }

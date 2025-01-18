@@ -39,7 +39,7 @@ class WishMakerView: UIView {
         
         // sliders stack
         static let sliderStackCorner: CGFloat = 20
-        static let sliderStackBottom: CGFloat = -340
+        static let sliderStackBottomOffset: CGFloat = -340
         static let sliderStackLeading: CGFloat = 20
         
         // color buttons stack
@@ -57,9 +57,7 @@ class WishMakerView: UIView {
         
         // add wish button
         static let addWishButtonTitle: String = "My wishes"
-        static let addWishButtonCorner: CGFloat = 20
         static let addWishButtonTopIdent: CGFloat = 20
-        static let addWishButtonHeight: CGFloat = 52
     }
     
     // MARK: - Fields
@@ -75,7 +73,8 @@ class WishMakerView: UIView {
     private let sliderBlue: CustomSlider = CustomSlider(title: Constants.blue, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderStack: UIStackView = UIStackView()
 
-    private let addWishButton: UIButton = UIButton(type: .system)
+    private let addWishButton: WishButton = WishButton(title: Constants.addWishButtonTitle)
+    
     
     weak var delegate: WishMakerViewDelegate?
     
@@ -170,21 +169,16 @@ class WishMakerView: UIView {
         NSLayoutConstraint.activate([
             sliderStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             sliderStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.sliderStackLeading),
-            sliderStack.topAnchor.constraint(equalTo: bottomAnchor, constant: Constants.sliderStackBottom)
+            sliderStack.topAnchor.constraint(equalTo: bottomAnchor, constant: Constants.sliderStackBottomOffset)
         ])
     }
     
     private func configureAddWishButton() {
-        addWishButton.setTitle(Constants.addWishButtonTitle, for: .normal)
-        addWishButton.setTitleColor(.systemPink, for: .normal)
-        addWishButton.backgroundColor = .white
         addWishButton.translatesAutoresizingMaskIntoConstraints = false
-        addWishButton.layer.cornerRadius = Constants.addWishButtonCorner
-        addWishButton.addTarget(self, action: #selector(addWishButtonTapped), for: .touchUpInside)
+        setActionForAddWishButton()
         
         addSubview(addWishButton)
         NSLayoutConstraint.activate([
-            addWishButton.heightAnchor.constraint(equalToConstant: Constants.addWishButtonHeight),
             addWishButton.topAnchor.constraint(equalTo: sliderStack.bottomAnchor, constant: Constants.addWishButtonTopIdent),
             addWishButton.leadingAnchor.constraint(equalTo: sliderStack.leadingAnchor),
             addWishButton.trailingAnchor.constraint(equalTo: sliderStack.trailingAnchor),
@@ -218,7 +212,9 @@ class WishMakerView: UIView {
         backgroundColor = UIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: Constants.alphaRGB)
     }
     
-    @objc private func addWishButtonTapped() {
-        delegate?.addWishWasPressed()
+    private func setActionForAddWishButton() {
+        addWishButton.action = { [weak self] in
+            self?.delegate?.addWishWasPressed()
+        }
     }
 }

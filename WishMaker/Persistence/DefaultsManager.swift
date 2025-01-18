@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol DefaultsServiceLogic {
+protocol DefaultsManagerLogic {
     func set<T>(forKey key: String, value: T)
     func get<T>(forKey key: String, defaultValue: T) -> T
     func removeObject(forKey key: String)
 }
 
-final class DefaultsService: DefaultsServiceLogic {
+final class DefaultsManager: DefaultsManagerLogic {
     private let defaults = UserDefaults.standard
     
     func set<T>(forKey key: String, value: T) {

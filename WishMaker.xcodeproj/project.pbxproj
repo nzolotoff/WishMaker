@@ -17,8 +17,12 @@
 		FB2A02412CFDFB8B005EADE6 /* WishMakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A02402CFDFB8B005EADE6 /* WishMakerView.swift */; };
 		FB2A02452CFF2B68005EADE6 /* WishStoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2A02442CFF2B68005EADE6 /* WishStoringView.swift */; };
 		FB2AC22D2CF4976D00D5DAC3 /* AddWishView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC22C2CF4976D00D5DAC3 /* AddWishView.swift */; };
-		FB2AC2332CF64D3800D5DAC3 /* DefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC2322CF64D3800D5DAC3 /* DefaultsService.swift */; };
-		FB2AC2352CF6501800D5DAC3 /* WishService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC2342CF6501800D5DAC3 /* WishService.swift */; };
+		FB2AC2332CF64D3800D5DAC3 /* DefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC2322CF64D3800D5DAC3 /* DefaultsManager.swift */; };
+		FB2AC2352CF6501800D5DAC3 /* WishManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2AC2342CF6501800D5DAC3 /* WishManager.swift */; };
+		FB3BBBDB2D3B5A3C00333536 /* WishButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3BBBDA2D3B5A3C00333536 /* WishButton.swift */; };
+		FB41A58D2D1ABD0500326C14 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB41A58B2D1ABD0500326C14 /* CoreData.xcdatamodeld */; };
+		FB41A5912D1AC1A800326C14 /* Wish+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */; };
+		FB41A5932D1AC2C900326C14 /* WishCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */; };
 		FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */; };
 		FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */; };
 		FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */; };
@@ -38,8 +42,12 @@
 		FB2A02402CFDFB8B005EADE6 /* WishMakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishMakerView.swift; sourceTree = "<group>"; };
 		FB2A02442CFF2B68005EADE6 /* WishStoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishStoringView.swift; sourceTree = "<group>"; };
 		FB2AC22C2CF4976D00D5DAC3 /* AddWishView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWishView.swift; sourceTree = "<group>"; };
-		FB2AC2322CF64D3800D5DAC3 /* DefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsService.swift; sourceTree = "<group>"; };
-		FB2AC2342CF6501800D5DAC3 /* WishService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishService.swift; sourceTree = "<group>"; };
+		FB2AC2322CF64D3800D5DAC3 /* DefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultsManager.swift; sourceTree = "<group>"; };
+		FB2AC2342CF6501800D5DAC3 /* WishManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishManager.swift; sourceTree = "<group>"; };
+		FB3BBBDA2D3B5A3C00333536 /* WishButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishButton.swift; sourceTree = "<group>"; };
+		FB41A58C2D1ABD0500326C14 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
+		FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wish+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishCoreDataManager.swift; sourceTree = "<group>"; };
 		FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishStoringViewController.swift; sourceTree = "<group>"; };
 		FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrittenWishCell.swift; sourceTree = "<group>"; };
@@ -151,7 +159,8 @@
 		FB2AC2312CF64C4D00D5DAC3 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				FB2AC2342CF6501800D5DAC3 /* WishService.swift */,
+				FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */,
+				FB2AC2342CF6501800D5DAC3 /* WishManager.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -171,6 +180,7 @@
 				FB2A02402CFDFB8B005EADE6 /* WishMakerView.swift */,
 				FB22E0182CD7BD5300670890 /* CustomSlider.swift */,
 				FB22E01B2CD7F62B00670890 /* ColorButton.swift */,
+				FB3BBBDA2D3B5A3C00333536 /* WishButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -188,9 +198,19 @@
 		FB2AC2392CFA614500D5DAC3 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				FB2AC2322CF64D3800D5DAC3 /* DefaultsService.swift */,
+				FB2AC2322CF64D3800D5DAC3 /* DefaultsManager.swift */,
+				FB3BAF352D1B13BD00218B67 /* CoreData */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		FB3BAF352D1B13BD00218B67 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				FB41A58B2D1ABD0500326C14 /* CoreData.xcdatamodeld */,
+				FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,17 +283,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB41A5912D1AC1A800326C14 /* Wish+CoreDataProperties.swift in Sources */,
 				FB2A02412CFDFB8B005EADE6 /* WishMakerView.swift in Sources */,
 				FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */,
+				FB41A58D2D1ABD0500326C14 /* CoreData.xcdatamodeld in Sources */,
+				FB41A5932D1AC2C900326C14 /* WishCoreDataManager.swift in Sources */,
 				FB22E0062CD6CBB800670890 /* SlidersViewController.swift in Sources */,
 				FB22E0022CD6CBB800670890 /* AppDelegate.swift in Sources */,
 				FB22E0042CD6CBB800670890 /* SceneDelegate.swift in Sources */,
 				FB22E0192CD7BD5300670890 /* CustomSlider.swift in Sources */,
 				FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */,
-				FB2AC2332CF64D3800D5DAC3 /* DefaultsService.swift in Sources */,
+				FB2AC2332CF64D3800D5DAC3 /* DefaultsManager.swift in Sources */,
 				FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */,
-				FB2AC2352CF6501800D5DAC3 /* WishService.swift in Sources */,
+				FB2AC2352CF6501800D5DAC3 /* WishManager.swift in Sources */,
 				FB2A02452CFF2B68005EADE6 /* WishStoringView.swift in Sources */,
+				FB3BBBDB2D3B5A3C00333536 /* WishButton.swift in Sources */,
 				FB22E01C2CD7F62B00670890 /* ColorButton.swift in Sources */,
 				FB2AC22D2CF4976D00D5DAC3 /* AddWishView.swift in Sources */,
 				FBC1EC122CF2091D008F32FE /* AddWishCell.swift in Sources */,
@@ -491,6 +515,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FB41A58B2D1ABD0500326C14 /* CoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FB41A58C2D1ABD0500326C14 /* CoreData.xcdatamodel */,
+			);
+			currentVersion = FB41A58C2D1ABD0500326C14 /* CoreData.xcdatamodel */;
+			path = CoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FB22DFF62CD6CBB800670890 /* Project object */;
 }
