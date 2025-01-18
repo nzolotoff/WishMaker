@@ -39,7 +39,7 @@ class WishMakerView: UIView {
         
         // sliders stack
         static let sliderStackCorner: CGFloat = 20
-        static let sliderStackBottomOffset: CGFloat = -340
+        static let sliderStackBottomOffset: CGFloat = -420
         static let sliderStackLeading: CGFloat = 20
         
         // color buttons stack
@@ -55,9 +55,16 @@ class WishMakerView: UIView {
         // random button
         static let randomButtomTitle: String = "Random color"
         
+        // wish button stack
+        static let wishButtonStackSpacing: CGFloat = 12
+        static let wishButtonStackTopIdent: CGFloat = 20
+        
         // add wish button
         static let addWishButtonTitle: String = "My wishes"
         static let addWishButtonTopIdent: CGFloat = 20
+        
+        // schedule wishes button
+        static let scheduleWishesButton: String = "Schedule wish granting"
     }
     
     // MARK: - Fields
@@ -66,7 +73,7 @@ class WishMakerView: UIView {
     
     private let hideButton: ColorButton = ColorButton(title: Constants.hideButtonTitleHide)
     private let randomButton: ColorButton = ColorButton(title: Constants.randomButtomTitle)
-    private let buttonStack: UIStackView = UIStackView()
+    private let colorButtonsStack: UIStackView = UIStackView()
     
     private let sliderRed: CustomSlider = CustomSlider(title: Constants.red, min: Constants.sliderMin, max: Constants.sliderMax)
     private let sliderGreen: CustomSlider = CustomSlider(title: Constants.green, min: Constants.sliderMin, max: Constants.sliderMax)
@@ -74,10 +81,10 @@ class WishMakerView: UIView {
     private let sliderStack: UIStackView = UIStackView()
 
     private let addWishButton: WishButton = WishButton(title: Constants.addWishButtonTitle)
-    
+    private let scheduleWishesButton: WishButton = WishButton(title: Constants.scheduleWishesButton)
+    private let wishButtonsStack: UIStackView = UIStackView()
     
     weak var delegate: WishMakerViewDelegate?
-    
     
     // MARK: - Lyfecycle
     init () {
@@ -97,7 +104,7 @@ class WishMakerView: UIView {
         configureDescription()
         configureSlidersStack()
         configureColorButtonsStack()
-        configureAddWishButton()
+        configureWishButtonsStack()
     }
     
     private func configureTitle() {
@@ -131,24 +138,24 @@ class WishMakerView: UIView {
     }
     
     private func configureColorButtonsStack() {
-        buttonStack.axis = .horizontal
-        buttonStack.spacing = Constants.buttonStackSpacing
-        buttonStack.distribution = .fillEqually
-        buttonStack.translatesAutoresizingMaskIntoConstraints = false
+        colorButtonsStack.axis = .horizontal
+        colorButtonsStack.spacing = Constants.buttonStackSpacing
+        colorButtonsStack.distribution = .fillEqually
+        colorButtonsStack.translatesAutoresizingMaskIntoConstraints = false
         
         setActionForHideButton()
         setActionForRandomButton()
         for button in [hideButton, randomButton] {
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: Constants.buttonHeighInStack).isActive = true
-            buttonStack.addArrangedSubview(button)
+            colorButtonsStack.addArrangedSubview(button)
         }
         
-        addSubview(buttonStack)
+        addSubview(colorButtonsStack)
         NSLayoutConstraint.activate([
-            buttonStack.bottomAnchor.constraint(equalTo: sliderStack.topAnchor, constant: Constants.buttonStackBottom),
-            buttonStack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            buttonStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.buttonStackLeading)
+            colorButtonsStack.bottomAnchor.constraint(equalTo: sliderStack.topAnchor, constant: Constants.buttonStackBottom),
+            colorButtonsStack.centerXAnchor.constraint(equalTo: centerXAnchor),
+            colorButtonsStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.buttonStackLeading)
         ])
     }
     
@@ -170,6 +177,26 @@ class WishMakerView: UIView {
             sliderStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             sliderStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.sliderStackLeading),
             sliderStack.topAnchor.constraint(equalTo: bottomAnchor, constant: Constants.sliderStackBottomOffset)
+        ])
+    }
+    
+    private func configureWishButtonsStack() {
+        wishButtonsStack.axis = .vertical
+        wishButtonsStack.spacing = Constants.wishButtonStackSpacing
+        wishButtonsStack.distribution = .fillEqually
+        
+        setActionForAddWishButton()
+        for button in [addWishButton, scheduleWishesButton] {
+            wishButtonsStack.addArrangedSubview(button)
+            button.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        addSubview(wishButtonsStack)
+        wishButtonsStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            wishButtonsStack.topAnchor.constraint(equalTo: sliderStack.bottomAnchor, constant: Constants.wishButtonStackTopIdent),
+            wishButtonsStack.leadingAnchor.constraint(equalTo: sliderStack.leadingAnchor),
+            wishButtonsStack.trailingAnchor.constraint(equalTo: sliderStack.trailingAnchor),
         ])
     }
     

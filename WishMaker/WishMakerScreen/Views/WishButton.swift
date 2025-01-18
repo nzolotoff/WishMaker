@@ -12,7 +12,6 @@ class WishButton: UIView {
     enum Constants {
         static let wishButtonCorner: CGFloat = 20
         static let wishButtonHeight: CGFloat = 52
-
     }
     
     // MARK: - Variables
