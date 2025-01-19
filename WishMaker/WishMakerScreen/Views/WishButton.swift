@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WishButton: UIView {
+class WishButton: UIView, TitleColorSettable {
     // MARK: - Constants
     enum Constants {
         static let wishButtonCorner: CGFloat = 20
@@ -18,7 +18,7 @@ class WishButton: UIView {
     var action: (() -> Void)?
     
     // MARK: - Fields
-    private let button: UIButton = UIButton(type: .system)
+    let button: UIButton = UIButton(type: .system)
     
     // MARK: - Lifecycle
     init(title: String) {

@@ -84,6 +84,15 @@ class WishMakerView: UIView {
     private let scheduleWishesButton: WishButton = WishButton(title: Constants.scheduleWishesButton)
     private let wishButtonsStack: UIStackView = UIStackView()
     
+    // MARK: - Variables
+    override var backgroundColor: UIColor? {
+        didSet {
+            let buttons: [TitleColorSettable] = [hideButton, randomButton, addWishButton, scheduleWishesButton]
+            for button in buttons  {
+                button.button.setTitleColor(backgroundColor, for: .normal)
+            }
+        }
+    }
     weak var delegate: WishMakerViewDelegate?
     
     // MARK: - Lyfecycle
@@ -99,7 +108,7 @@ class WishMakerView: UIView {
     
     // MARK: - Private methods
     private func configureUI() {
-        backgroundColor = .cyan
+        backgroundColor = .systemPink
         configureTitle()
         configureDescription()
         configureSlidersStack()
@@ -147,7 +156,6 @@ class WishMakerView: UIView {
         setActionForRandomButton()
         for button in [hideButton, randomButton] {
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.heightAnchor.constraint(equalToConstant: Constants.buttonHeighInStack).isActive = true
             colorButtonsStack.addArrangedSubview(button)
         }
         
@@ -189,6 +197,8 @@ class WishMakerView: UIView {
         for button in [addWishButton, scheduleWishesButton] {
             wishButtonsStack.addArrangedSubview(button)
             button.translatesAutoresizingMaskIntoConstraints = false
+            //button.button.tintColor = currentBackgroundColor
+
         }
         
         addSubview(wishButtonsStack)
@@ -200,18 +210,6 @@ class WishMakerView: UIView {
         ])
     }
     
-    private func configureAddWishButton() {
-        addWishButton.translatesAutoresizingMaskIntoConstraints = false
-        setActionForAddWishButton()
-        
-        addSubview(addWishButton)
-        NSLayoutConstraint.activate([
-            addWishButton.topAnchor.constraint(equalTo: sliderStack.bottomAnchor, constant: Constants.addWishButtonTopIdent),
-            addWishButton.leadingAnchor.constraint(equalTo: sliderStack.leadingAnchor),
-            addWishButton.trailingAnchor.constraint(equalTo: sliderStack.trailingAnchor),
-        ])
-    }
- 
     // MARK: - Actions
     private func setActionForHideButton() {
         hideButton.action = { [weak self] in

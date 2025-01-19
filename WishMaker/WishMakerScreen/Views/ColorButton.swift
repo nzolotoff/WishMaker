@@ -7,12 +7,15 @@
 
 import UIKit
 
-class ColorButton: UIView {
+protocol TitleColorSettable {
+    var button: UIButton { get }
+}
+
+class ColorButton: UIView, TitleColorSettable {
     // MARK: - Constants
     enum Constants {
         static let corner: CGFloat = 12
-        static let height: Double = 42
-        static let width: Double = 120
+        static let height: Double = 38
         
         static let fatalError: String = "init(coder:) has not been implemented"
     }
@@ -48,6 +51,8 @@ class ColorButton: UIView {
         button.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         button.topAnchor.constraint(equalTo: topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        
+        self.heightAnchor.constraint(equalToConstant: Constants.height).isActive = true
     }
     
     // MARK: - Actions
