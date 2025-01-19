@@ -20,7 +20,13 @@ final class WishMakerViewController: UIViewController {
 }
 
 extension WishMakerViewController: WishMakerViewDelegate {
+    func scheduleWishesWasPressed() {
+        let vc = WishCalendarViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func addWishWasPressed() {
         present(WishStoringViewController(), animated: true)
     }
+    
 }

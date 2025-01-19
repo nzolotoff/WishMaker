@@ -9,6 +9,7 @@ import UIKit
 
 protocol WishMakerViewDelegate: AnyObject {
     func addWishWasPressed()
+    func scheduleWishesWasPressed()
 }
 
 class WishMakerView: UIView {
@@ -191,6 +192,7 @@ class WishMakerView: UIView {
         wishButtonsStack.distribution = .fillEqually
         
         setActionForAddWishButton()
+        setActionForScheduleWishesButton()
         wishButtonsStack.addArrangedSubviews(addWishButton, scheduleWishesButton)
         
         addSubview(wishButtonsStack)
@@ -232,6 +234,12 @@ class WishMakerView: UIView {
     private func setActionForAddWishButton() {
         addWishButton.action = { [weak self] in
             self?.delegate?.addWishWasPressed()
+        }
+    }
+    
+    private func setActionForScheduleWishesButton() {
+        scheduleWishesButton.action = { [weak self] in
+            self?.delegate?.scheduleWishesWasPressed()
         }
     }
 }
