@@ -52,6 +52,7 @@ class ColorButton: UIView, TitleColorSettable {
         button.topAnchor.constraint(equalTo: topAnchor).isActive = true
         button.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.heightAnchor.constraint(equalToConstant: Constants.height).isActive = true
     }
     

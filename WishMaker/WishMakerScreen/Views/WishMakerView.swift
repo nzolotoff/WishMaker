@@ -154,10 +154,7 @@ class WishMakerView: UIView {
         
         setActionForHideButton()
         setActionForRandomButton()
-        for button in [hideButton, randomButton] {
-            button.translatesAutoresizingMaskIntoConstraints = false
-            colorButtonsStack.addArrangedSubview(button)
-        }
+        colorButtonsStack.addArrangedSubviews(hideButton, randomButton)
         
         addSubview(colorButtonsStack)
         NSLayoutConstraint.activate([
@@ -173,14 +170,14 @@ class WishMakerView: UIView {
         sliderStack.clipsToBounds = true
         sliderStack.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(sliderStack)
+        sliderStack.addArrangedSubviews(sliderRed, sliderGreen, sliderBlue)
         for view in [sliderRed, sliderGreen, sliderBlue] {
-            sliderStack.addArrangedSubview(view)
             view.valueChanged = { [weak self] _ in
                 self?.updateBackgroundColor()
             }
         }
         
+        addSubview(sliderStack)
         NSLayoutConstraint.activate([
             sliderStack.centerXAnchor.constraint(equalTo: centerXAnchor),
             sliderStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.sliderStackLeading),
@@ -194,12 +191,7 @@ class WishMakerView: UIView {
         wishButtonsStack.distribution = .fillEqually
         
         setActionForAddWishButton()
-        for button in [addWishButton, scheduleWishesButton] {
-            wishButtonsStack.addArrangedSubview(button)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            //button.button.tintColor = currentBackgroundColor
-
-        }
+        wishButtonsStack.addArrangedSubviews(addWishButton, scheduleWishesButton)
         
         addSubview(wishButtonsStack)
         wishButtonsStack.translatesAutoresizingMaskIntoConstraints = false

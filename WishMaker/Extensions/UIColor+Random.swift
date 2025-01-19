@@ -1,10 +1,3 @@
-//
-//  Extensions.swift
-//  HW 1 - iOS Course
-//
-//  Created by Nikita Zolotov on 09.10.2024.
-//
-
 import UIKit
 
 extension UIColor {

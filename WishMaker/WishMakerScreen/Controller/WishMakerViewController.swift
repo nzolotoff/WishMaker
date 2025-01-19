@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SlidersViewController: UIViewController {
+final class WishMakerViewController: UIViewController {
     
     // MARK: - Fields
     private let wishMakerView: WishMakerView = WishMakerView()
@@ -19,7 +19,7 @@ final class SlidersViewController: UIViewController {
     }
 }
 
-extension SlidersViewController: WishMakerViewDelegate {
+extension WishMakerViewController: WishMakerViewDelegate {
     func addWishWasPressed() {
         present(WishStoringViewController(), animated: true)
     }
