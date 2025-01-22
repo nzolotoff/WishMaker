@@ -7,9 +7,14 @@
 
 import UIKit
 
-class WishCalendarViewController: UIViewController {
+final class WishCalendarViewController: UIViewController {
+    // MARK: - Fields
+    private let wishCalendarView: WishCalendarView = WishCalendarView()
     
-
+    // MARK: - Lyfecycle
+    override func loadView() {
+        self.view = wishCalendarView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
