@@ -21,7 +21,7 @@ public final class WishCoreDataManager {
     
     // MARK: - Fields
     private var appDelegate: AppDelegate {
-        UIApplication.shared.delegate as! AppDelegate
+        UIApplication.shared.delegate as? AppDelegate ?? AppDelegate()
     }
     
     private var context: NSManagedObjectContext {

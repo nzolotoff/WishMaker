@@ -14,7 +14,7 @@ final class AddWishCell: UITableViewCell {
         static let textViewTextColor: UIColor = .systemPink
         static let textViewFontSize: CGFloat = 16
         static let textViewBorderWidth: CGFloat = 1
-        static let textViewPlaceholderOffset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 0)
+        static let textViewContainerInset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 0)
         
         static let addWishViewTrailingOffset: CGFloat = -1 * 10
         static let addWishViewTopOffset: CGFloat = 5
@@ -62,7 +62,7 @@ final class AddWishCell: UITableViewCell {
         addWishTextView.font = .systemFont(ofSize: Constants.textViewFontSize)
         addWishTextView.layer.borderWidth = Constants.textViewBorderWidth
         addWishTextView.layer.borderColor = UIColor.systemPink.cgColor
-        addWishTextView.textContainerInset = Constants.textViewPlaceholderOffset
+        addWishTextView.textContainerInset = Constants.textViewContainerInset
 
         NSLayoutConstraint.activate([
             addWishView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.addWishViewTrailingOffset),

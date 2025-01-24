@@ -7,20 +7,20 @@
 
 import UIKit
 
-//protocol WishCalendarViewDelegate {
-//    
-//}
 
 final class WishCalendarView: UIView {
+    
     // MARK: - Constants
     enum Constants {
         
         // collection
-        static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-        static let collectionTopOffset: CGFloat = 12
+        static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
+        static let collectionTopOffset: CGFloat = 4
         static let collectionNumberOfItemsInSection: Int = 10
-        static let collectionCellSize: CGSize = CGSize(width: 44, height: 44)
-        static let nameOfCellReuseIdentifier: String = "cell"
+        static let collectionCellHeight: CGFloat = 79
+        static let collectionCellWidthDecrement: CGFloat = 40
+        static let collectionMinimumLineSpacing: CGFloat = 12
+        static let collectionInteritemSpacing: CGFloat = 12
     }
     
     // MARK: - Fields
@@ -28,9 +28,6 @@ final class WishCalendarView: UIView {
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
-    
-    // MARK: - Variables
-
     
     // MARK: Lyfecycle
     init () {
@@ -45,7 +42,7 @@ final class WishCalendarView: UIView {
     
     // MARK: - Private Methods
     private func configureUI() {
-        backgroundColor = .cyan
+        backgroundColor = .white
         configureCollectionView()
     }
     
@@ -56,21 +53,27 @@ final class WishCalendarView: UIView {
         myCollection.alwaysBounceVertical = true
         myCollection.showsVerticalScrollIndicator = false
         myCollection.contentInset = Constants.collectionInset
-        
-        // temporary
-        myCollection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: Constants.nameOfCellReuseIdentifier)
-        
-        self.addSubview(myCollection)
-        
         myCollection.translatesAutoresizingMaskIntoConstraints = false
+        
+        // cell register
+        if let layout = myCollection.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.minimumInteritemSpacing = Constants.collectionInteritemSpacing
+            layout.minimumLineSpacing = Constants.collectionMinimumLineSpacing
+            
+            layout.invalidateLayout()
+        }
+        // temporary
+        myCollection.register(
+                WishEventCell.self,
+                forCellWithReuseIdentifier: WishEventCell.reuseIdentifier
+            )
+        
+        addSubview(myCollection)
         myCollection.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constants.collectionTopOffset).isActive = true
         myCollection.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor).isActive = true
         myCollection.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor).isActive = true
         myCollection.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
-    
-    
-
 }
 
 extension WishCalendarView: UICollectionViewDataSource {
@@ -85,7 +88,20 @@ extension WishCalendarView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.nameOfCellReuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: WishEventCell.reuseIdentifier,
+            for: indexPath
+        )
+        guard let wishEventCell = cell as? WishEventCell else { return cell }
+        
+        wishEventCell.configureCell(
+            with: WishEventModel(
+                title: "Fly to Maldives",
+                description: "my wish is to have a great vacation on a coast",
+                startDate: "Start date",
+                endDate: "End Date"
+            )
+        )
         return cell
     }
 }
@@ -96,7 +112,7 @@ extension WishCalendarView: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return Constants.collectionCellSize
+        return CGSize(width: self.bounds.width - Constants.collectionCellWidthDecrement, height: Constants.collectionCellHeight)
     }
     
     func collectionView(

@@ -10,9 +10,7 @@ import Foundation
 import CoreData
 
 @objc(Wish)
-public class Wish: NSManagedObject {
-
-}
+public class Wish: NSManagedObject { }
 
 extension Wish {
     @NSManaged public var id: Int16

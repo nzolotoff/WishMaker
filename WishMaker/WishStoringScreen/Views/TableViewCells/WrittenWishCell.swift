@@ -13,16 +13,18 @@ final class WrittenWishCell: UITableViewCell {
     
     // MARK: - Constants
     enum Constants {
-        static let wrapColor: UIColor = .red
-        static let wrapCorner: CGFloat = 16
-        static let wrapOffsetV: CGFloat = 5
-        static let wrapOffsetH: CGFloat = 10
-        static let wishLabelLeadingOffset: CGFloat = 12
-        static let wishLabelTopOffset: CGFloat = 8
+        static let wrapViewColor: UIColor = .clear
+        static let wrapViewCorner: CGFloat = 8
+        static let wrapViewOffsetH: CGFloat = 4
+        static let wrapViewOffsetV: CGFloat = 12
+        static let wishLabelOffsetLeading: CGFloat = 12
+        static let wishLabelOffsetTop: CGFloat = 8
+        static let wishLabelOffsetTrailing: CGFloat = -1 * 12
     }
     
     // MARK: - Fields
     private let wishLabel: UILabel = UILabel()
+    private let wrapView: UIView = UIView()
     
     // MARK: - Lyfecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,7 +37,7 @@ final class WrittenWishCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Non Private Methods
+    // MARK: - Cell Configuration
     func configure(with wish: String) {
         wishLabel.text = wish
     }
@@ -45,24 +47,27 @@ final class WrittenWishCell: UITableViewCell {
         selectionStyle = .none
         backgroundColor = .clear
         
-        let wrap: UIView = UIView()
-        addSubview(wrap)
+        wrapView.backgroundColor = Constants.wrapViewColor
+        wrapView.layer.cornerRadius = Constants.wrapViewCorner
+        wrapView.translatesAutoresizingMaskIntoConstraints = false
         
-        wrap.backgroundColor = Constants.wrapColor
-        wrap.layer.cornerRadius = Constants.wrapCorner
-        wrap.translatesAutoresizingMaskIntoConstraints = false
-        
+        self.addSubview(wrapView)
         NSLayoutConstraint.activate([
-            wrap.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.wrapOffsetV),
-            wrap.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.wrapOffsetH)
+            wrapView.topAnchor.constraint(equalTo: self.topAnchor, constant: Constants.wrapViewOffsetV),
+            wrapView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: Constants.wrapViewOffsetH),
+            wrapView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -Constants.wrapViewOffsetH),
+            wrapView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -Constants.wrapViewOffsetV)
             ])
         
-        wrap.addSubview(wishLabel)
         wishLabel.translatesAutoresizingMaskIntoConstraints = false
         wishLabel.textColor = .systemPink
+        
+        wrapView.addSubview(wishLabel)
         NSLayoutConstraint.activate([
-            wishLabel.leadingAnchor.constraint(equalTo: wrap.leadingAnchor, constant: Constants.wishLabelLeadingOffset),
-            wishLabel.topAnchor.constraint(equalTo: wrap.topAnchor, constant: Constants.wishLabelTopOffset)
+            wishLabel.leadingAnchor.constraint(equalTo: wrapView.leadingAnchor, constant: Constants.wishLabelOffsetLeading),
+            wishLabel.topAnchor.constraint(equalTo: wrapView.topAnchor, constant: Constants.wishLabelOffsetTop),
+            wishLabel.trailingAnchor.constraint(equalTo: wrapView.trailingAnchor, constant: Constants.wishLabelOffsetTrailing),
+            wishLabel.bottomAnchor.constraint(equalTo: wrapView.bottomAnchor)
         ])
     }
 }

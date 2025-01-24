@@ -94,6 +94,7 @@ class WishMakerView: UIView {
             }
         }
     }
+    
     weak var delegate: WishMakerViewDelegate?
     
     // MARK: - Lyfecycle
