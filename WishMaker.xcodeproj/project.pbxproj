@@ -32,6 +32,12 @@
 		FBC1EC122CF2091D008F32FE /* AddWishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC112CF2091D008F32FE /* AddWishCell.swift */; };
 		FBE565072D3D18A2008DA732 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE565062D3D18A0008DA732 /* UIStackView+.swift */; };
 		FBE5650A2D3D34FC008DA732 /* WishCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE565092D3D34FC008DA732 /* WishCalendarViewController.swift */; };
+		FBEA29682D48D94D006B5E1A /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEA29672D48D94D006B5E1A /* NavigationBarView.swift */; };
+		FBEA296D2D48F06C006B5E1A /* WishEventCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEA296C2D48F06C006B5E1A /* WishEventCreationViewController.swift */; };
+		FBEA296F2D48F0B9006B5E1A /* WishEventCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEA296E2D48F0B9006B5E1A /* WishEventCreationView.swift */; };
+		FBEA29712D4912A5006B5E1A /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBEA29702D4912A5006B5E1A /* CustomTextField.swift */; };
+		FBF1B5B32D4A52DF00A9A1EF /* EventSetupDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1B5B22D4A52DF00A9A1EF /* EventSetupDateViewController.swift */; };
+		FBF1B5B52D4A52F000A9A1EF /* EventSetupDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1B5B42D4A52F000A9A1EF /* EventSetupDateView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +68,12 @@
 		FBC1EC112CF2091D008F32FE /* AddWishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWishCell.swift; sourceTree = "<group>"; };
 		FBE565062D3D18A0008DA732 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		FBE565092D3D34FC008DA732 /* WishCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishCalendarViewController.swift; sourceTree = "<group>"; };
+		FBEA29672D48D94D006B5E1A /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		FBEA296C2D48F06C006B5E1A /* WishEventCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishEventCreationViewController.swift; sourceTree = "<group>"; };
+		FBEA296E2D48F0B9006B5E1A /* WishEventCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishEventCreationView.swift; sourceTree = "<group>"; };
+		FBEA29702D4912A5006B5E1A /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		FBF1B5B22D4A52DF00A9A1EF /* EventSetupDateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSetupDateViewController.swift; sourceTree = "<group>"; };
+		FBF1B5B42D4A52F000A9A1EF /* EventSetupDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSetupDateView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				FB0B4CBB2D41125000EEF3BC /* WishCalendarView.swift */,
+				FBEA29672D48D94D006B5E1A /* NavigationBarView.swift */,
 				FB0B4CBD2D422F1000EEF3BC /* CollectionViewCells */,
 			);
 			path = Views;
@@ -131,6 +144,7 @@
 				FB22E0152CD6CF9D00670890 /* AppLifecycle */,
 				FB2AC2392CFA614500D5DAC3 /* Persistence */,
 				FB22E01D2CD802E900670890 /* Extensions */,
+				FBEA29692D48EFA3006B5E1A /* WishEventCreationScreen */,
 				FBE565082D3D34BC008DA732 /* WishCalendarScreen */,
 				FB2AC2382CFA599C00D5DAC3 /* WishStoringScreen */,
 				FB2AC2362CFA585E00D5DAC3 /* WishMakerScreen */,
@@ -175,12 +189,12 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		FB2A02432CFF2A6E005EADE6 /* Controllers */ = {
+		FB2A02432CFF2A6E005EADE6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */,
 			);
-			path = Controllers;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		FB2AC22E2CF4AEAE00D5DAC3 /* TableViewCells */ = {
@@ -235,7 +249,7 @@
 			children = (
 				FB2AC2312CF64C4D00D5DAC3 /* Storage */,
 				FB22E0172CD7BD3900670890 /* Views */,
-				FB2A02432CFF2A6E005EADE6 /* Controllers */,
+				FB2A02432CFF2A6E005EADE6 /* Controller */,
 			);
 			path = WishStoringScreen;
 			sourceTree = "<group>";
@@ -266,6 +280,58 @@
 				FB0B4CB92D41121400EEF3BC /* Controller */,
 			);
 			path = WishCalendarScreen;
+			sourceTree = "<group>";
+		};
+		FBEA29692D48EFA3006B5E1A /* WishEventCreationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FBF1B5AF2D4A529800A9A1EF /* EventSetupDateScreen */,
+				FBEA296B2D48F006006B5E1A /* Views */,
+				FBEA296A2D48EFCA006B5E1A /* Controller */,
+			);
+			path = WishEventCreationScreen;
+			sourceTree = "<group>";
+		};
+		FBEA296A2D48EFCA006B5E1A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FBEA296C2D48F06C006B5E1A /* WishEventCreationViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FBEA296B2D48F006006B5E1A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBEA296E2D48F0B9006B5E1A /* WishEventCreationView.swift */,
+				FBEA29702D4912A5006B5E1A /* CustomTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FBF1B5AF2D4A529800A9A1EF /* EventSetupDateScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FBF1B5B12D4A52B300A9A1EF /* Views */,
+				FBF1B5B02D4A52AC00A9A1EF /* Controller */,
+			);
+			path = EventSetupDateScreen;
+			sourceTree = "<group>";
+		};
+		FBF1B5B02D4A52AC00A9A1EF /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FBF1B5B22D4A52DF00A9A1EF /* EventSetupDateViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		FBF1B5B12D4A52B300A9A1EF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBF1B5B42D4A52F000A9A1EF /* EventSetupDateView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,26 +405,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB41A5912D1AC1A800326C14 /* Wish+CoreDataProperties.swift in Sources */,
+				FBEA296F2D48F0B9006B5E1A /* WishEventCreationView.swift in Sources */,
 				FB2A02412CFDFB8B005EADE6 /* WishMakerView.swift in Sources */,
 				FBE5650A2D3D34FC008DA732 /* WishCalendarViewController.swift in Sources */,
 				FB0B4CBF2D422F9900EEF3BC /* WishEventCell.swift in Sources */,
 				FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */,
+				FBF1B5B52D4A52F000A9A1EF /* EventSetupDateView.swift in Sources */,
 				FB41A58D2D1ABD0500326C14 /* CoreData.xcdatamodeld in Sources */,
 				FB41A5932D1AC2C900326C14 /* WishCoreDataManager.swift in Sources */,
+				FBEA29712D4912A5006B5E1A /* CustomTextField.swift in Sources */,
 				FB22E0062CD6CBB800670890 /* WishMakerViewController.swift in Sources */,
 				FB22E0022CD6CBB800670890 /* AppDelegate.swift in Sources */,
 				FBE565072D3D18A2008DA732 /* UIStackView+.swift in Sources */,
+				FBEA29682D48D94D006B5E1A /* NavigationBarView.swift in Sources */,
 				FB22E0042CD6CBB800670890 /* SceneDelegate.swift in Sources */,
 				FB22E0192CD7BD5300670890 /* CustomSlider.swift in Sources */,
 				FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */,
 				FB0B4CBC2D41125000EEF3BC /* WishCalendarView.swift in Sources */,
 				FB2AC2332CF64D3800D5DAC3 /* DefaultsManager.swift in Sources */,
 				FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */,
+				FBEA296D2D48F06C006B5E1A /* WishEventCreationViewController.swift in Sources */,
 				FB2AC2352CF6501800D5DAC3 /* WishDefaultsManager.swift in Sources */,
 				FB2A02452CFF2B68005EADE6 /* WishStoringView.swift in Sources */,
 				FB3BBBDB2D3B5A3C00333536 /* WishButton.swift in Sources */,
 				FB22E01C2CD7F62B00670890 /* ColorButton.swift in Sources */,
 				FB0B4CC22D4234C900EEF3BC /* WishEventModel.swift in Sources */,
+				FBF1B5B32D4A52DF00A9A1EF /* EventSetupDateViewController.swift in Sources */,
 				FB2AC22D2CF4976D00D5DAC3 /* AddWishView.swift in Sources */,
 				FBC1EC122CF2091D008F32FE /* AddWishCell.swift in Sources */,
 			);

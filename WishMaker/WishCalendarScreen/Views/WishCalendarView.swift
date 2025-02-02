@@ -7,16 +7,19 @@
 
 import UIKit
 
+protocol WishCalendarViewDelegate: AnyObject {
+    func goBackButtonWasTapped()
+    func addButtonWastapped()
+}
 
 final class WishCalendarView: UIView {
     
     // MARK: - Constants
     enum Constants {
-        
         // collection
         static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let collectionTopOffset: CGFloat = 4
-        static let collectionNumberOfItemsInSection: Int = 10
+        static let collectionNumberOfItemsInSection: Int = 1
         static let collectionCellHeight: CGFloat = 79
         static let collectionCellWidthDecrement: CGFloat = 40
         static let collectionMinimumLineSpacing: CGFloat = 12
@@ -24,10 +27,14 @@ final class WishCalendarView: UIView {
     }
     
     // MARK: - Fields
+    private let navigationBarView: NavigationBarView = NavigationBarView()
     private let myCollection: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
     )
+    
+    // MARK: - Variables
+    weak var delegate: WishCalendarViewDelegate?
     
     // MARK: Lyfecycle
     init () {
@@ -43,7 +50,19 @@ final class WishCalendarView: UIView {
     // MARK: - Private Methods
     private func configureUI() {
         backgroundColor = .white
+        configureNavigationBarView()
         configureCollectionView()
+    }
+    
+    private func configureNavigationBarView() {
+        setActionForGoBackButton()
+        setActionForAddButton()
+        navigationBarView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(navigationBarView)
+        navigationBarView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        navigationBarView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        navigationBarView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
     
     private func configureCollectionView() {
@@ -64,18 +83,32 @@ final class WishCalendarView: UIView {
         }
         // temporary
         myCollection.register(
-                WishEventCell.self,
-                forCellWithReuseIdentifier: WishEventCell.reuseIdentifier
-            )
+            WishEventCell.self,
+            forCellWithReuseIdentifier: WishEventCell.reuseIdentifier
+        )
         
         addSubview(myCollection)
-        myCollection.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: Constants.collectionTopOffset).isActive = true
+        myCollection.topAnchor.constraint(equalTo: navigationBarView.bottomAnchor, constant: Constants.collectionTopOffset).isActive = true
         myCollection.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor).isActive = true
         myCollection.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor).isActive = true
         myCollection.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor).isActive = true
     }
+    
+    // MARK: - Actions
+    private func setActionForGoBackButton() {
+        navigationBarView.goBackButtonAction = { [weak self] in
+            self?.delegate?.goBackButtonWasTapped()
+        }
+    }
+    
+    private func setActionForAddButton() {
+        navigationBarView.addButtonAction = { [weak self] in
+            self?.delegate?.addButtonWastapped()
+        }
+    }
 }
 
+// MARK: - UICollectionViewDataSource
 extension WishCalendarView: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -106,6 +139,7 @@ extension WishCalendarView: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension WishCalendarView: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,

@@ -29,7 +29,7 @@ extension WishStoringViewController: WishStoringViewDelegate {
             let wishesArray = wishes.map(\.title)
             let wishesTitlesToShare = wishesArray.compactMap { $0 }
             print(wishesTitlesToShare)
-            let activityController = UIActivityViewController(activityItems: ["\(wishesTitlesToShare)"], applicationActivities: nil)
+            let activityController = UIActivityViewController(activityItems: wishesTitlesToShare, applicationActivities: nil)
             present(activityController, animated: true)
         }
     }

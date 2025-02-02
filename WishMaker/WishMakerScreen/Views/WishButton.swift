@@ -21,9 +21,9 @@ class WishButton: UIView, TitleColorSettable {
     let button: UIButton = UIButton(type: .system)
     
     // MARK: - Lifecycle
-    init(title: String) {
+    init(title: String, titleColor: UIColor = .systemPink, backGroundColor: UIColor = .white) {
         super.init(frame: .zero)
-        configureWishButton(title)
+        configureWishButton(title: title, titleColor: titleColor, backGroundColor: backGroundColor)
     }
     
     required init?(coder: NSCoder) {
@@ -31,10 +31,10 @@ class WishButton: UIView, TitleColorSettable {
     }
     
     // MARK: - Private Methods
-    private func configureWishButton(_ title: String) {
+    private func configureWishButton(title: String, titleColor: UIColor, backGroundColor: UIColor) {
         button.setTitle(title, for: .normal)
-        button.setTitleColor(.systemPink, for: .normal)
-        button.backgroundColor = .white
+        button.setTitleColor(titleColor, for: .normal)
+        button.backgroundColor = backGroundColor
         button.layer.cornerRadius = Constants.wishButtonCorner
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(wishButtonWasTapped), for: .touchUpInside)

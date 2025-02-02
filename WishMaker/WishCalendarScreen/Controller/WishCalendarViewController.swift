@@ -18,6 +18,18 @@ final class WishCalendarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        wishCalendarView.delegate = self
+        navigationController?.isNavigationBarHidden = true
+    }
+}
+
+extension WishCalendarViewController: WishCalendarViewDelegate {
+    func goBackButtonWasTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addButtonWastapped() {
+        let vc = WishEventCreationViewController()
+        present(vc, animated: true)
     }
 }

@@ -38,10 +38,6 @@ class WishEventCell: UICollectionViewCell {
         static let dateStackOffsetTrailing: CGFloat = -1 * 12
         static let dateStackOffsetLeading: CGFloat = 12
         static let dateStackOffsetBottom: CGFloat = -1 * 8
-
-
-
-
     }
     
     // MARK: - Fields
@@ -127,7 +123,7 @@ class WishEventCell: UICollectionViewCell {
         // configure labels
         for label in [startDateLabel, endDateLabel] {
             label.numberOfLines = Constants.stackLabelsNumberOfLines
-            label.textColor = .lightGray
+            label.textColor = .white
             label.font = Constants.stackLabelsFont
             label.translatesAutoresizingMaskIntoConstraints = false
         }
