@@ -39,7 +39,7 @@ class ColorButton: UIView, TitleColorSettable {
     
     // MARK: - Private methods
     private func configureButton(title: String) {
-        button.backgroundColor = .black
+        button.backgroundColor = .white
         button.layer.cornerRadius = Constants.corner
         button.setTitle(title, for: .normal)
         button.setTitleColor(.white, for: .normal)

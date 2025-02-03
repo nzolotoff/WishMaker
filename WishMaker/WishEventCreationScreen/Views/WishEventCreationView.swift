@@ -18,7 +18,7 @@ class WishEventCreationView: UIView {
         // screen title label
         static let screenTitleLabelText: String = "Create event here!"
         static let screenTitleLabelNumberOfLines: Int = 1
-        static let screenTitleLabelFont: UIFont = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        static let screenTitleLabelFont: UIFont = UIFont.systemFont(ofSize: 18, weight: .regular)
         static let screenTitleLabelOffsetTop: CGFloat = 26
         
         // close button
@@ -84,7 +84,7 @@ class WishEventCreationView: UIView {
     
     private func configureCloseButton() {
         closeButton.setImage(Constants.closeButtonImage, for: .normal)
-        closeButton.tintColor = .systemGray
+        closeButton.tintColor = .systemBlue
         closeButton.addTarget(self, action: #selector(closeButtonWasTapped), for: .touchUpInside)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         

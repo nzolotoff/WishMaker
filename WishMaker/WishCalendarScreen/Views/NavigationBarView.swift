@@ -15,6 +15,10 @@ protocol NavigationBarViewDelegate {
 class NavigationBarView: UIView {
     // MARK: - Constants
     enum Constants {
+        // title label
+        static let titleLabelFont: UIFont = UIFont.systemFont(ofSize: 18, weight: .regular)
+        static let titleLabelNumberOflines: Int = 1
+        
         // go back button name
         static let goBackButtonName: String = "chevron.backward"
         
@@ -32,27 +36,50 @@ class NavigationBarView: UIView {
     }
 
     // MARK: - Fields
+    private let titleLabel: UILabel = UILabel()
     private let goBackButton: UIButton = UIButton(type: .system)
     private let addButton: UIButton = UIButton(type: .system)
     private let navigationStack: UIStackView = UIStackView()
+    private let dividerView: UIView = UIView()
     
     // MARK: - Variables
     var goBackButtonAction: (() -> Void)?
     var addButtonAction: (() -> Void)?
     
     // MARK: - Lyfecycle
-    init() {
+    init(navigationTitle: String) {
         super.init(frame: .zero)
-        configureUI()
+        configureUI(navigationTitle)
     }
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+        
     // MARK: - Private methods
-    private func configureUI() {
+    private func configureUI(_ navigationTitle: String) {
+        configureNavigationStack()
+        configureTitleLabel(navigationTitle)
+        
+        self.heightAnchor.constraint(equalToConstant: Constants.selfHeight).isActive = true
+    }
+    
+    private func configureTitleLabel(_ text: String) {
+        titleLabel.text = text
+        titleLabel.textColor = .systemPink
+        titleLabel.font = Constants.titleLabelFont
+        titleLabel.numberOfLines = Constants.titleLabelNumberOflines
+        titleLabel.textAlignment = .center
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(titleLabel)
+        titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: navigationStack.topAnchor).isActive = true
+        titleLabel.bottomAnchor.constraint(equalTo: navigationStack.bottomAnchor).isActive = true
+    }
+    
+    private func configureNavigationStack() {
         goBackButton.setImage(UIImage(systemName: Constants.goBackButtonName), for: .normal)
         addButton.setImage(UIImage(systemName: Constants.addButtonName), for: .normal)
         
@@ -73,8 +100,6 @@ class NavigationBarView: UIView {
         navigationStack.topAnchor.constraint(equalTo: topAnchor, constant: Constants.navigationStackViewOffsetTop).isActive = true
         navigationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.navigationStackViewOffsetTrailing).isActive = true
         navigationStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.navigationStackViewOffsetBottom).isActive = true
-        
-        self.heightAnchor.constraint(equalToConstant: Constants.selfHeight).isActive = true
     }
     
     // MARK: - Actions

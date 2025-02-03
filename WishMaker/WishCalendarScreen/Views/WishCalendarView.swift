@@ -16,6 +16,9 @@ final class WishCalendarView: UIView {
     
     // MARK: - Constants
     enum Constants {
+        // navigation title
+        static let navigationBarViewTitle: String = "My events"
+        
         // collection
         static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let collectionTopOffset: CGFloat = 4
@@ -27,7 +30,7 @@ final class WishCalendarView: UIView {
     }
     
     // MARK: - Fields
-    private let navigationBarView: NavigationBarView = NavigationBarView()
+    private let navigationBarView: NavigationBarView = NavigationBarView(navigationTitle: Constants.navigationBarViewTitle)
     private let myCollection: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
