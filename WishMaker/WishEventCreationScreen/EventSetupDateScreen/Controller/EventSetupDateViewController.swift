@@ -11,7 +11,7 @@ protocol EventSetupDateViewControllerDelegate: AnyObject {
     func setDateToTextField(startDate: String)
 }
 
-class EventSetupDateViewController: UIViewController {
+final class EventSetupDateViewController: UIViewController {
     // MARK: - Fields
     private let myView: EventSetupDateView = EventSetupDateView()
     

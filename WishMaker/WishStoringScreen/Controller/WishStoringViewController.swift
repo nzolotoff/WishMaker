@@ -10,7 +10,7 @@ import UIKit
 final class WishStoringViewController: UIViewController {
     // MARK: - Fields
     private let wishStoringView: WishStoringView = WishStoringView()
-    private var wishManager = WishCoreDataManager.shared
+    private var wishManager: WishCoreDataManagerLogic = WishCoreDataManager.shared
     
     // MARK: - Lyfecycle
     override func loadView() {

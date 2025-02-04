@@ -12,7 +12,7 @@ protocol EventSetupDateViewDelegate: AnyObject {
     func doneButtonWasTapped(currentDate: Date)
 }
 
-class EventSetupDateView: UIView {
+final class EventSetupDateView: UIView {
     // MARK: - Constants
     enum Constants {
         // cancel button

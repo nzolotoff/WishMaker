@@ -10,9 +10,11 @@ import UIKit
 protocol WishEventCreationViewDelegate: AnyObject {
     func closeButtonWasTapped()
     func textFieldDateWasTapped(currentTextField: UITextField)
+    func presentAlert(alert: UIAlertController)
+    func deliverEvent(event: WishEventModel)
 }
 
-class WishEventCreationView: UIView {
+final class WishEventCreationView: UIView {
     // MARK: - Constants
     enum Constants {
         // screen title label
@@ -31,7 +33,7 @@ class WishEventCreationView: UIView {
         static let eventStackViewOffsetTop: CGFloat = 32
         static let eventStackViewOffsetLeading: CGFloat = 20
         static let eventStackViewOffsetTrailing: CGFloat = -1 * 20
-
+        
         // create event button
         static let createEventButtonOffsetTop: CGFloat = 24
     }
@@ -90,7 +92,7 @@ class WishEventCreationView: UIView {
         
         addSubview(closeButton)
         closeButton.topAnchor.constraint(equalTo: topAnchor, constant:
-            Constants.closeButtonOffsetTop).isActive = true
+                                            Constants.closeButtonOffsetTop).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.closeButtonOffsetTrailing).isActive = true
     }
     
@@ -118,15 +120,44 @@ class WishEventCreationView: UIView {
     private func configureCreateEventButton() {
         createEventButton.translatesAutoresizingMaskIntoConstraints = false
         
+        setActionForCreateEventButton()
+        
         addSubview(createEventButton)
         createEventButton.topAnchor.constraint(equalTo: eventStackView.bottomAnchor, constant: Constants.createEventButtonOffsetTop).isActive = true
         createEventButton.leadingAnchor.constraint(equalTo: eventStackView.leadingAnchor).isActive = true
         createEventButton.trailingAnchor.constraint(equalTo: eventStackView.trailingAnchor).isActive = true
     }
-      
+    
     // MARK: - Actions
     @objc private func closeButtonWasTapped() {
         self.delegate?.closeButtonWasTapped()
+    }
+    
+    private func setActionForCreateEventButton() {
+        createEventButton.action = { [weak self] in
+            guard let title = self?.eventTitleTextField.getText(), !title.isEmpty, let description = self?.eventDescriptionTextField.getText(), !description.isEmpty, let startDateString = self?.eventStartDateTextField.getText(), !startDateString.isEmpty, let endDateString = self?.eventEndDateTextField.getText(), !endDateString.isEmpty
+            else {
+                let alert = UIAlertController(title: "Ooops...", message: "Fill in all the fields", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(action)
+                self?.delegate?.presentAlert(alert: alert)
+                
+                return
+            }
+            
+            let dateFormatter = DateFormatter()
+            let startDate = dateFormatter.date(from: startDateString)
+            let endDate = dateFormatter.date(from: endDateString)
+            
+            self?.delegate?.deliverEvent(
+                event: WishEventModel(
+                    title: title,
+                    description: description,
+                    startDate: startDate ?? Date(),
+                    endDate: endDate ?? Date()
+                )
+            )
+        }
     }
 }
 

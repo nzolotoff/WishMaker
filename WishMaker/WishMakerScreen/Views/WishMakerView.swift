@@ -12,7 +12,7 @@ protocol WishMakerViewDelegate: AnyObject {
     func scheduleWishesWasPressed()
 }
 
-class WishMakerView: UIView {
+final class WishMakerView: UIView {
     enum Constants {
         
         // min/max values for sliders

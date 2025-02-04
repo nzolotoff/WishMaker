@@ -10,6 +10,9 @@ import UIKit
 protocol WishCalendarViewDelegate: AnyObject {
     func goBackButtonWasTapped()
     func addButtonWastapped()
+    
+    func getEvents() -> [WishEventModel]?
+    func getEvent(byId id: Int) -> WishEventModel
 }
 
 final class WishCalendarView: UIView {
@@ -22,7 +25,6 @@ final class WishCalendarView: UIView {
         // collection
         static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let collectionTopOffset: CGFloat = 4
-        static let collectionNumberOfItemsInSection: Int = 1
         static let collectionCellHeight: CGFloat = 79
         static let collectionCellWidthDecrement: CGFloat = 40
         static let collectionMinimumLineSpacing: CGFloat = 12
@@ -48,6 +50,11 @@ final class WishCalendarView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Reload collection data
+    func reloadData() {
+        myCollection.reloadData()
     }
     
     // MARK: - Private Methods
@@ -117,7 +124,7 @@ extension WishCalendarView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return Constants.collectionNumberOfItemsInSection
+        return self.delegate?.getEvents()?.count ?? 0
     }
     
     func collectionView(
@@ -130,14 +137,9 @@ extension WishCalendarView: UICollectionViewDataSource {
         )
         guard let wishEventCell = cell as? WishEventCell else { return cell }
         
-        wishEventCell.configureCell(
-            with: WishEventModel(
-                title: "Fly to Maldives",
-                description: "my wish is to have a great vacation on a coast",
-                startDate: "Start date",
-                endDate: "End Date"
-            )
-        )
+        guard let event = self.delegate?.getEvent(byId: indexPath.row) else { return cell }
+        
+        wishEventCell.configureCell(with: event)
         return cell
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddWishView: UIView {
+final class AddWishView: UIView {
     // MARK: - Constants
     enum Constants {
         static let viewCorner: CGFloat = 12

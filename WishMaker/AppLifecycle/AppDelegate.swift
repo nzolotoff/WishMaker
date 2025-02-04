@@ -16,8 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         container.loadPersistentStores { description, error in
             if let error {
                 fatalError("Failed to load persistent stores: \(error.localizedDescription)")
-            } else {
-                print("DB url: \(String(describing: description.url?.absoluteString))")
             }
         }
         return container

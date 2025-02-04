@@ -18,7 +18,7 @@ protocol WishStoringViewDelegate: AnyObject {
     func deleteWish(at index: Int)
 }
 
-class WishStoringView: UIView {
+final class WishStoringView: UIView {
     // MARK: - Constants
     enum Constants {
         static let closeButtonName: String = "xmark.circle.fill"

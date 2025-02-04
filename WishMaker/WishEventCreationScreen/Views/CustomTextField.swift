@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTextField: UIView {
+final class CustomTextField: UIView {
     // MARK: - Constants
     enum Constants {
         // title label
@@ -44,6 +44,10 @@ class CustomTextField: UIView {
     }
     
     // MARK: - Non private methods
+    func getText() -> String {
+        textField.text ?? " "
+    }
+    
     func setText(text: String) {
         textField.text = text
     }

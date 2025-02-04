@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WishButton: UIView, TitleColorSettable {
+final class WishButton: UIView, TitleColorSettable {
     // MARK: - Constants
     enum Constants {
         static let wishButtonCorner: CGFloat = 20

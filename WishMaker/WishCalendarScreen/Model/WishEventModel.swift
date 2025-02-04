@@ -10,6 +10,6 @@ import Foundation
 struct WishEventModel {
     var title: String
     var description: String
-    var startDate: String
-    var endDate: String
+    var startDate: Date
+    var endDate: Date
 }

@@ -10,6 +10,12 @@ import UIKit
 class WishEventCell: UICollectionViewCell {
     // MARK: - Constants
     enum Constants {
+        // identifier
+        static let identifier: String = "WishEventCell"
+        
+        // date format
+        static let dateFormat: String = "dd MMM yyyy, HH:mm"
+        
         // wrap view
         static let wrapViewCorner: CGFloat = 12
         
@@ -41,7 +47,7 @@ class WishEventCell: UICollectionViewCell {
     }
     
     // MARK: - Fields
-    static let reuseIdentifier: String = "WishEventCell"
+    static let reuseIdentifier: String = Constants.identifier
     
     private let wrapView: UIView = UIView()
     private let titleLabel: UILabel = UILabel()
@@ -63,10 +69,16 @@ class WishEventCell: UICollectionViewCell {
     
     // MARK: - Cell Configuration
     func configureCell(with event: WishEventModel) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constants.dateFormat
+        
+        let startDateString = dateFormatter.string(from: event.startDate)
+        let endDateString = dateFormatter.string(from: event.endDate)
+        
         titleLabel.text = event.title
         descriptionLabel.text = event.description
-        startDateLabel.text = event.startDate.lowercased()
-        endDateLabel.text = event.endDate.lowercased()
+        startDateLabel.text = "starts: " + startDateString
+        endDateLabel.text = "ends: " + endDateString
     }
     
     // MARK: - UI Configuration

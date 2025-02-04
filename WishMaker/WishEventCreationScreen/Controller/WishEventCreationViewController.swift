@@ -7,7 +7,11 @@
 
 import UIKit
 
-class WishEventCreationViewController: UIViewController {
+protocol WishEventCreationViewControllerDelegate: AnyObject {
+    func createEvent(event: WishEventModel)
+}
+
+final class WishEventCreationViewController: UIViewController {
     // MARK: - Constants
     enum Constants {
         static let eventSetupDatePopoverHeight: CGFloat = 480
@@ -19,7 +23,7 @@ class WishEventCreationViewController: UIViewController {
     
     // MARK: - Variables
     private var currentTextField: UITextField?
-
+    weak var delegate: WishEventCreationViewControllerDelegate?
 
     override func loadView() {
         self.view = myView
@@ -33,6 +37,10 @@ class WishEventCreationViewController: UIViewController {
 
 // MARK: - WishEventCreationViewDelegate
 extension WishEventCreationViewController: WishEventCreationViewDelegate {
+    func presentAlert(alert: UIAlertController) {
+        present(alert, animated: true)
+    }
+    
     func textFieldDateWasTapped(currentTextField: UITextField) {
         self.currentTextField = currentTextField
         
@@ -47,6 +55,11 @@ extension WishEventCreationViewController: WishEventCreationViewDelegate {
         }
         
         present(eventSetupDateViewController, animated: true)
+    }
+    
+    func deliverEvent(event: WishEventModel) {
+        self.delegate?.createEvent(event: event)
+        dismiss(animated: true)
     }
     
     func closeButtonWasTapped() {

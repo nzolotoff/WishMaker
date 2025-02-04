@@ -11,7 +11,7 @@ protocol TitleColorSettable {
     var button: UIButton { get }
 }
 
-class ColorButton: UIView, TitleColorSettable {
+final class ColorButton: UIView, TitleColorSettable {
     // MARK: - Constants
     enum Constants {
         static let corner: CGFloat = 12
