@@ -13,6 +13,7 @@ protocol WishCalendarViewDelegate: AnyObject {
     
     func getEvents() -> [WishEventModel]?
     func getEvent(byId id: Int) -> WishEventModel
+    func deleteEvent(byId id: Int)
 }
 
 final class WishCalendarView: UIView {
@@ -23,16 +24,27 @@ final class WishCalendarView: UIView {
         static let navigationBarViewTitle: String = "My events"
         
         // collection
-        static let collectionInset: UIEdgeInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         static let collectionTopOffset: CGFloat = 4
         static let collectionCellHeight: CGFloat = 79
         static let collectionCellWidthDecrement: CGFloat = 40
         static let collectionMinimumLineSpacing: CGFloat = 12
         static let collectionInteritemSpacing: CGFloat = 12
+        static let collectionInset: UIEdgeInsets = UIEdgeInsets(
+            top: 8,
+            left: 20,
+            bottom: 8,
+            right: 20
+        )
+        
+        // delete action context menu
+        static let deleteActionTitle: String = "Delete"
+        static let deleteActionImage: UIImage? = UIImage(systemName: "trash")
     }
     
     // MARK: - Fields
-    private let navigationBarView: NavigationBarView = NavigationBarView(navigationTitle: Constants.navigationBarViewTitle)
+    private let navigationBarView: NavigationBarView = NavigationBarView(
+        navigationTitle: Constants.navigationBarViewTitle
+    )
     private let myCollection: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout()
@@ -159,5 +171,33 @@ extension WishCalendarView: UICollectionViewDelegateFlowLayout {
         didSelectItemAt indexPath: IndexPath
     ) {
         print("cell tapped at index \(indexPath.item)")
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        canEditItemAt indexPath: IndexPath
+    ) -> Bool {
+        true
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemAt indexPath: IndexPath,
+        point: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(
+            identifier: nil,
+            previewProvider: nil
+        ) { suggestedActions in
+            let deleteAction = UIAction(
+                title: Constants.deleteActionTitle,
+                image: Constants.deleteActionImage,
+                attributes: .destructive
+            ) { [weak self] action in
+                self?.delegate?.deleteEvent(byId: indexPath.row)
+                self?.reloadData()
+            }
+            return UIMenu(title: "", children: [deleteAction])
+        }
     }
 }

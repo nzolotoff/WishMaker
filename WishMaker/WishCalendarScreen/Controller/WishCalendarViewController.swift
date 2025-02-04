@@ -30,6 +30,23 @@ final class WishCalendarViewController: UIViewController {
 
 // MARK: - WishCalendarViewDelegate
 extension WishCalendarViewController: WishCalendarViewDelegate {
+    func goBackButtonWasTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addButtonWastapped() {
+        let vc = WishEventCreationViewController()
+        vc.delegate = self
+        present(vc, animated: true)
+    }
+    
+    func getEvents() -> [WishEventModel]? {
+        if case .success(let events) = eventManager.fetchEvents() {
+            return events
+        }
+        return nil
+    }
+    
     func getEvent(byId id: Int) -> WishEventModel {
         let result = eventManager.fetchEvent(withID: id)
         switch result {
@@ -43,23 +60,9 @@ extension WishCalendarViewController: WishCalendarViewDelegate {
         }
     }
     
-    func getEvents() -> [WishEventModel]? {
-        if case .success(let events) = eventManager.fetchEvents() {
-            return events
-        }
-        return nil
+    func deleteEvent(byId id: Int) {
+        eventManager.deleteEvent(withId: id)
     }
-    
-    func goBackButtonWasTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func addButtonWastapped() {
-        let vc = WishEventCreationViewController()
-        vc.delegate = self
-        present(vc, animated: true)
-    }
-    
 }
 
 // MARK: - WishEventCreationViewControllerDelegate
