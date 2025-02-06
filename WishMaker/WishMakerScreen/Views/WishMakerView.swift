@@ -116,6 +116,8 @@ final class WishMakerView: UIView {
         configureSlidersStack()
         configureColorButtonsStack()
         configureWishButtonsStack()
+        
+        print(hideButton.center)
     }
     
     private func configureTitle() {

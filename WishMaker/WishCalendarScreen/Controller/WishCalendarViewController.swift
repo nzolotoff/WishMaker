@@ -11,11 +11,22 @@ final class WishCalendarViewController: UIViewController {
     // MARK: - Fields
     private let wishCalendarView: WishCalendarView = WishCalendarView()
     private let wishEventCreationViewController: WishEventCreationViewController = WishEventCreationViewController()
+    private let calendarManager: CalendarManaging
 
     // MARK: - Variables
     private var eventManager: EventCoreDataManagerLogic = EventCoreDataManager.shared
     
     // MARK: - Lyfecycle
+    init(calendarManager: CalendarManaging = CalendarEventManager()) {
+        self.calendarManager = calendarManager
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         self.view = wishCalendarView
     }
@@ -71,6 +82,11 @@ extension WishCalendarViewController: WishEventCreationViewControllerDelegate {
         do {
             try eventManager.createEvent(event: event)
             wishCalendarView.reloadData()
+            
+            if !calendarManager.create(eventModel: event) {
+                present(UIAlertController(title: "", message: "", preferredStyle: .alert), animated: true)
+            }
+            
         } catch {
             print(error.localizedDescription)
         }

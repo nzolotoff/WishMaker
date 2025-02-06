@@ -28,6 +28,7 @@
 		FB41A58D2D1ABD0500326C14 /* CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FB41A58B2D1ABD0500326C14 /* CoreData.xcdatamodeld */; };
 		FB41A5912D1AC1A800326C14 /* Wish+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */; };
 		FB41A5932D1AC2C900326C14 /* WishCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */; };
+		FB4D02DE2D54B810003DC5F8 /* CalendarEventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4D02DD2D54B810003DC5F8 /* CalendarEventManager.swift */; };
 		FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */; };
 		FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */; };
 		FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */; };
@@ -66,6 +67,7 @@
 		FB41A58C2D1ABD0500326C14 /* CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreData.xcdatamodel; sourceTree = "<group>"; };
 		FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wish+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishCoreDataManager.swift; sourceTree = "<group>"; };
+		FB4D02DD2D54B810003DC5F8 /* CalendarEventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventManager.swift; sourceTree = "<group>"; };
 		FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishStoringViewController.swift; sourceTree = "<group>"; };
 		FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrittenWishCell.swift; sourceTree = "<group>"; };
@@ -125,12 +127,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		FB149D452D50F9250064195B /* Storage */ = {
+		FB149D452D50F9250064195B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				FB149D462D50FC260064195B /* EventCoreDataManager.swift */,
+				FB4D02DD2D54B810003DC5F8 /* CalendarEventManager.swift */,
 			);
-			path = Storage;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		FB22DFF52CD6CBB800670890 = {
@@ -288,7 +291,7 @@
 		FBE565082D3D34BC008DA732 /* WishCalendarScreen */ = {
 			isa = PBXGroup;
 			children = (
-				FB149D452D50F9250064195B /* Storage */,
+				FB149D452D50F9250064195B /* Managers */,
 				FB0B4CC02D4234B600EEF3BC /* Model */,
 				FB0B4CBA2D41122900EEF3BC /* Views */,
 				FB0B4CB92D41121400EEF3BC /* Controller */,
@@ -423,6 +426,7 @@
 				FB2A02412CFDFB8B005EADE6 /* WishMakerView.swift in Sources */,
 				FBE5650A2D3D34FC008DA732 /* WishCalendarViewController.swift in Sources */,
 				FB0B4CBF2D422F9900EEF3BC /* WishEventCell.swift in Sources */,
+				FB4D02DE2D54B810003DC5F8 /* CalendarEventManager.swift in Sources */,
 				FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */,
 				FBF1B5B52D4A52F000A9A1EF /* EventSetupDateView.swift in Sources */,
 				FB41A58D2D1ABD0500326C14 /* CoreData.xcdatamodeld in Sources */,

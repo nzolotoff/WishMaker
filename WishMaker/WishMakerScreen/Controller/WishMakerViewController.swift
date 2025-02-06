@@ -17,7 +17,12 @@ final class WishMakerViewController: UIViewController {
         self.view = wishMakerView
         wishMakerView.delegate = self
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
 }
+
 
 extension WishMakerViewController: WishMakerViewDelegate {
     func scheduleWishesWasPressed() {
