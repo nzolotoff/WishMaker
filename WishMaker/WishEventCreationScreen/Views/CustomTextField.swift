@@ -88,10 +88,19 @@ final class CustomTextField: UIView {
         textField.layer.borderColor = UIColor.systemPink.cgColor
         textField.translatesAutoresizingMaskIntoConstraints = false
         
+        textField.delegate = self
+        
         addSubview(textField)
         textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.textFieldOffsetTop).isActive = true
         textField.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         textField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true
+    }
+}
+
+extension CustomTextField: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
