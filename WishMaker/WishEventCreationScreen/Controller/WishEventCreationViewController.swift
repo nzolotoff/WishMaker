@@ -15,6 +15,19 @@ final class WishEventCreationViewController: UIViewController {
     // MARK: - Constants
     enum Constants {
         static let eventSetupDatePopoverHeight: CGFloat = 480
+        
+        // select wishes popover size
+        static let selectWishesViewControllerSize: CGSize = CGSize(width: 370, height: 380)
+        static let popoverSouceRect: CGRect = CGRect(
+            origin: CGPoint(
+                x: 201,
+                y: 170
+            ),
+            size: CGSize(
+                width: 1,
+                height: 1
+            )
+        )
     }
     
     // MARK: - Fields
@@ -57,11 +70,15 @@ final class WishEventCreationViewController: UIViewController {
 // MARK: - WishEventCreationViewDelegate
 extension WishEventCreationViewController: WishEventCreationViewDelegate {
     func selectButtonWasTapped() {
-        selectWishesViewController.modalPresentationStyle = .pageSheet
-        
+        selectWishesViewController.modalPresentationStyle = .popover
+        selectWishesViewController.preferredContentSize = Constants.selectWishesViewControllerSize
+
         if #available(iOS 15.0, *) {
-            if let sheet = selectWishesViewController.sheetPresentationController {
-                sheet.detents = [.medium()]
+            if let popover = selectWishesViewController.popoverPresentationController {
+                popover.sourceView = self.myView
+                popover.sourceRect = Constants.popoverSouceRect
+                popover.permittedArrowDirections = .up
+                popover.delegate = self
             }
         }
         present(selectWishesViewController, animated: true)
@@ -108,5 +125,13 @@ extension WishEventCreationViewController: EventSetupDateViewControllerDelegate 
 extension WishEventCreationViewController: SelectWishesViewControllerDelegate {
     func setToTitle(wish: String) {
         myView.setTitleTextField(text: wish)
+    }
+}
+
+extension WishEventCreationViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(
+        for controller: UIPresentationController
+    ) -> UIModalPresentationStyle {
+        return .none
     }
 }

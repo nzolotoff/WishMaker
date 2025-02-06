@@ -25,7 +25,7 @@ final class SelectWishesView: UIView {
         
         // buttons stack view
         static let buttonsStackSpacing: CGFloat = 12
-        static let buttonsStackOffsetTop: CGFloat = 12
+        static let buttonsStackOffsetTop: CGFloat = 16
         static let buttonsStackOffsetLeading: CGFloat = 20
         static let buttonsStackOffsetTrailing: CGFloat = -1 * 20
         
