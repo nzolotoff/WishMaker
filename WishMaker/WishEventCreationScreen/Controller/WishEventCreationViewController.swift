@@ -19,24 +19,54 @@ final class WishEventCreationViewController: UIViewController {
     
     // MARK: - Fields
     private let myView: WishEventCreationView = WishEventCreationView()
-    private let eventSetupDateViewController: EventSetupDateViewController = EventSetupDateViewController()
+    private let eventSetupDateViewController: EventSetupDateViewController
+    private let selectWishesViewController: SelectWishesViewController
     
     // MARK: - Variables
     private var currentTextField: UITextField?
     weak var delegate: WishEventCreationViewControllerDelegate?
 
+    // MARK: - Lyfecycle
+    init(
+        eventSetupDateViewController: EventSetupDateViewController = EventSetupDateViewController(),
+        selectWishesViewController: SelectWishesViewController = SelectWishesViewController()
+    ) {
+        self.eventSetupDateViewController = eventSetupDateViewController
+        self.selectWishesViewController = selectWishesViewController
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         self.view = myView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         myView.delegate = self
         eventSetupDateViewController.delegate = self
+        selectWishesViewController.delegate = self
     }
 }
 
 // MARK: - WishEventCreationViewDelegate
 extension WishEventCreationViewController: WishEventCreationViewDelegate {
+    func selectButtonWasTapped() {
+        selectWishesViewController.modalPresentationStyle = .pageSheet
+        
+        if #available(iOS 15.0, *) {
+            if let sheet = selectWishesViewController.sheetPresentationController {
+                sheet.detents = [.medium()]
+            }
+        }
+        present(selectWishesViewController, animated: true)
+    }
+    
     func presentAlert(alert: UIAlertController) {
         present(alert, animated: true)
     }
@@ -69,7 +99,14 @@ extension WishEventCreationViewController: WishEventCreationViewDelegate {
 
 // MARK: - EventSetupDateViewControllerDelegate
 extension WishEventCreationViewController: EventSetupDateViewControllerDelegate {
-    func setDateToTextField(startDate: String) {
-        self.currentTextField?.text = startDate
+    func setDateToTextField(date: String) {
+        self.currentTextField?.text = date
+    }
+}
+
+// MARK: - SelectWishesViewControllerDelegate
+extension WishEventCreationViewController: SelectWishesViewControllerDelegate {
+    func setToTitle(wish: String) {
+        myView.setTitleTextField(text: wish)
     }
 }

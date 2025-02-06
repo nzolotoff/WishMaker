@@ -8,7 +8,7 @@
 import UIKit
 
 protocol EventSetupDateViewControllerDelegate: AnyObject {
-    func setDateToTextField(startDate: String)
+    func setDateToTextField(date: String)
 }
 
 final class EventSetupDateViewController: UIViewController {
@@ -40,7 +40,7 @@ extension EventSetupDateViewController: EventSetupDateViewDelegate {
         dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
         let stringDate = dateFormatter.string(from: currentDate)
         
-        delegate?.setDateToTextField(startDate: stringDate)
+        delegate?.setDateToTextField(date: stringDate)
         dismiss(animated: true)
     }
 }

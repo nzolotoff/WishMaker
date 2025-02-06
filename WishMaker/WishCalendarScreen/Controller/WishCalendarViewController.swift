@@ -10,15 +10,20 @@ import UIKit
 final class WishCalendarViewController: UIViewController {
     // MARK: - Fields
     private let wishCalendarView: WishCalendarView = WishCalendarView()
-    private let wishEventCreationViewController: WishEventCreationViewController = WishEventCreationViewController()
+    private let wishEventCreationViewController: WishEventCreationViewController
     private let calendarManager: CalendarManaging
 
     // MARK: - Variables
     private var eventManager: EventCoreDataManagerLogic = EventCoreDataManager.shared
     
     // MARK: - Lyfecycle
-    init(calendarManager: CalendarManaging = CalendarEventManager()) {
+    init(
+        calendarManager: CalendarManaging = CalendarEventManager(),
+        wishEventCreationViewController: WishEventCreationViewController = WishEventCreationViewController()
+    ) {
+        self.wishEventCreationViewController = wishEventCreationViewController
         self.calendarManager = calendarManager
+        
         super.init(nibName: nil, bundle: nil)
     }
     

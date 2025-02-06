@@ -29,6 +29,8 @@
 		FB41A5912D1AC1A800326C14 /* Wish+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */; };
 		FB41A5932D1AC2C900326C14 /* WishCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */; };
 		FB4D02DE2D54B810003DC5F8 /* CalendarEventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4D02DD2D54B810003DC5F8 /* CalendarEventManager.swift */; };
+		FB4D02E32D5520CD003DC5F8 /* SelectWishesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4D02E22D5520CD003DC5F8 /* SelectWishesViewController.swift */; };
+		FB4D02E52D552137003DC5F8 /* SelectWishesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB4D02E42D552137003DC5F8 /* SelectWishesView.swift */; };
 		FB9087A62CEDFF4800D62C5D /* UIColor+Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */; };
 		FBC1EC0E2CEF1903008F32FE /* WishStoringViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */; };
 		FBC1EC102CF08D5F008F32FE /* WrittenWishCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */; };
@@ -68,6 +70,8 @@
 		FB41A58F2D1AC1A800326C14 /* Wish+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Wish+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		FB41A5922D1AC2C900326C14 /* WishCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishCoreDataManager.swift; sourceTree = "<group>"; };
 		FB4D02DD2D54B810003DC5F8 /* CalendarEventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventManager.swift; sourceTree = "<group>"; };
+		FB4D02E22D5520CD003DC5F8 /* SelectWishesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWishesViewController.swift; sourceTree = "<group>"; };
+		FB4D02E42D552137003DC5F8 /* SelectWishesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectWishesView.swift; sourceTree = "<group>"; };
 		FB9087A52CEDFF4800D62C5D /* UIColor+Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Random.swift"; sourceTree = "<group>"; };
 		FBC1EC0D2CEF1903008F32FE /* WishStoringViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishStoringViewController.swift; sourceTree = "<group>"; };
 		FBC1EC0F2CF08D5F008F32FE /* WrittenWishCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrittenWishCell.swift; sourceTree = "<group>"; };
@@ -288,6 +292,31 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		FB4D02DF2D55205E003DC5F8 /* SelectFromWishesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				FB4D02E02D55209A003DC5F8 /* Views */,
+				FB4D02E12D5520AA003DC5F8 /* Controller */,
+			);
+			path = SelectFromWishesScreen;
+			sourceTree = "<group>";
+		};
+		FB4D02E02D55209A003DC5F8 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FB4D02E42D552137003DC5F8 /* SelectWishesView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FB4D02E12D5520AA003DC5F8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FB4D02E22D5520CD003DC5F8 /* SelectWishesViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		FBE565082D3D34BC008DA732 /* WishCalendarScreen */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +331,7 @@
 		FBEA29692D48EFA3006B5E1A /* WishEventCreationScreen */ = {
 			isa = PBXGroup;
 			children = (
+				FB4D02DF2D55205E003DC5F8 /* SelectFromWishesScreen */,
 				FBF1B5AF2D4A529800A9A1EF /* EventSetupDateScreen */,
 				FBEA296B2D48F006006B5E1A /* Views */,
 				FBEA296A2D48EFCA006B5E1A /* Controller */,
@@ -434,6 +464,7 @@
 				FBEA29712D4912A5006B5E1A /* CustomTextField.swift in Sources */,
 				FB22E0062CD6CBB800670890 /* WishMakerViewController.swift in Sources */,
 				FB22E0022CD6CBB800670890 /* AppDelegate.swift in Sources */,
+				FB4D02E52D552137003DC5F8 /* SelectWishesView.swift in Sources */,
 				FBE565072D3D18A2008DA732 /* UIStackView+.swift in Sources */,
 				FBEA29682D48D94D006B5E1A /* NavigationBarView.swift in Sources */,
 				FB22E0042CD6CBB800670890 /* SceneDelegate.swift in Sources */,
@@ -452,6 +483,7 @@
 				FB0B4CC22D4234C900EEF3BC /* WishEventModel.swift in Sources */,
 				FBF1B5B32D4A52DF00A9A1EF /* EventSetupDateViewController.swift in Sources */,
 				FB2AC22D2CF4976D00D5DAC3 /* AddWishView.swift in Sources */,
+				FB4D02E32D5520CD003DC5F8 /* SelectWishesViewController.swift in Sources */,
 				FBC1EC122CF2091D008F32FE /* AddWishCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

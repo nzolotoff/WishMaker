@@ -12,6 +12,7 @@ protocol WishEventCreationViewDelegate: AnyObject {
     func textFieldDateWasTapped(currentTextField: UITextField)
     func presentAlert(alert: UIAlertController)
     func deliverEvent(event: WishEventModel)
+    func selectButtonWasTapped()
 }
 
 final class WishEventCreationView: UIView {
@@ -41,12 +42,14 @@ final class WishEventCreationView: UIView {
     // MARK: - Fields
     private let screenTitleLabel: UILabel = UILabel()
     private let closeButton: UIButton = UIButton(type: .system)
+    private let selectButton: UIButton = UIButton(type: .system)
     private let eventTitleTextField: CustomTextField = CustomTextField(title: "Title", placeholder: "Enter event title here..")
     private let eventDescriptionTextField: CustomTextField = CustomTextField(title: "Description", placeholder: "Type here something..")
     private let eventStartDateTextField: CustomTextField = CustomTextField(title: "Start date", placeholder: "Tap to set start date")
     private let eventEndDateTextField: CustomTextField = CustomTextField(title: "End date", placeholder: "Tap to set end date")
     private let eventStackView: UIStackView = UIStackView()
     private let createEventButton: WishButton = WishButton(title: "Create event", titleColor: .white, backGroundColor: .systemPink)
+
     
     // MARK: - Variables
     weak var delegate: WishEventCreationViewDelegate?
@@ -63,10 +66,17 @@ final class WishEventCreationView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Set text to title textfield
+    func setTitleTextField(text: String) {
+        eventTitleTextField.setText(text: text)
+    }
+    
     // MARK: - Configure UI
     private func configureUI() {
         configureScreenTileLabel()
         configureCloseButton()
+        configureEventTitleTextField()
+        configureSelectButton()
         configureEventStackView()
         configureCreateEventButton()
     }
@@ -91,20 +101,45 @@ final class WishEventCreationView: UIView {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(closeButton)
-        closeButton.topAnchor.constraint(equalTo: topAnchor, constant:
-                                            Constants.closeButtonOffsetTop).isActive = true
+        closeButton.topAnchor.constraint(equalTo: topAnchor, constant: Constants.closeButtonOffsetTop).isActive = true
         closeButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.closeButtonOffsetTrailing).isActive = true
     }
     
+    private func configureEventTitleTextField() {
+        eventTitleTextField.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(eventTitleTextField)
+        eventTitleTextField.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 32).isActive = true
+        eventTitleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        eventTitleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -68).isActive = true
+    }
+    
+    private func configureSelectButton() {
+        selectButton.setImage(UIImage(systemName: "list.star"), for: .normal)
+        selectButton.tintColor = .systemPink
+        selectButton.addTarget(self, action: #selector(selectButtonWasTapped), for: .touchUpInside)
+        selectButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(selectButton)
+        
+        selectButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 72).isActive = true
+        selectButton.leadingAnchor.constraint(equalTo: eventTitleTextField.trailingAnchor, constant: 4).isActive = true
+        selectButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+    }
+
     private func configureEventStackView() {
-        for textfield in [eventTitleTextField, eventDescriptionTextField, eventStartDateTextField, eventEndDateTextField] {
+        for textfield in [eventDescriptionTextField, eventStartDateTextField, eventEndDateTextField] {
             textfield.translatesAutoresizingMaskIntoConstraints = false
         }
         
         eventStartDateTextField.setDelegate(self)
         eventEndDateTextField.setDelegate(self)
         
-        eventStackView.addArrangedSubviews(eventTitleTextField, eventDescriptionTextField, eventStartDateTextField, eventEndDateTextField)
+        eventStackView.addArrangedSubviews(
+            eventDescriptionTextField,
+            eventStartDateTextField,
+            eventEndDateTextField
+        )
         
         eventStackView.axis = .vertical
         eventStackView.distribution = .fillEqually
@@ -112,9 +147,9 @@ final class WishEventCreationView: UIView {
         eventStackView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(eventStackView)
-        eventStackView.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: Constants.eventStackViewOffsetTop).isActive = true
-        eventStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.eventStackViewOffsetLeading).isActive = true
-        eventStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.eventStackViewOffsetTrailing).isActive = true
+        eventStackView.topAnchor.constraint(equalTo: eventTitleTextField.bottomAnchor, constant: 24).isActive = true
+        eventStackView.leadingAnchor.constraint(equalTo: eventTitleTextField.leadingAnchor).isActive = true
+        eventStackView.trailingAnchor.constraint(equalTo: selectButton.trailingAnchor).isActive = true
     }
     
     private func configureCreateEventButton() {
@@ -131,6 +166,10 @@ final class WishEventCreationView: UIView {
     // MARK: - Actions
     @objc private func closeButtonWasTapped() {
         self.delegate?.closeButtonWasTapped()
+    }
+    
+    @objc private func selectButtonWasTapped() {
+        self.delegate?.selectButtonWasTapped()
     }
     
     private func setActionForCreateEventButton() {
