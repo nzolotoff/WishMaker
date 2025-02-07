@@ -97,7 +97,10 @@ class NavigationBarView: UIView {
         
         addSubview(navigationStack)
         navigationStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.navigationStackViewOffsetLeading).isActive = true
-        navigationStack.topAnchor.constraint(equalTo: topAnchor, constant: Constants.navigationStackViewOffsetTop).isActive = true
+        navigationStack.topAnchor.constraint(
+            equalTo: topAnchor,
+            constant: Constants.navigationStackViewOffsetTop
+        ).isActive = true
         navigationStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.navigationStackViewOffsetTrailing).isActive = true
         navigationStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: Constants.navigationStackViewOffsetBottom).isActive = true
     }

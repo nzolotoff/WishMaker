@@ -29,14 +29,31 @@ final class WishEventCreationView: UIView {
         static let closeButtonOffsetTop: CGFloat = 24
         static let closeButtonOffsetTrailing: CGFloat = -1 * 20
         
+        // select button
+        static let selectButtonImageName: UIImage? = UIImage(systemName: "list.star")
+        static let selectButtonOffsetTop: CGFloat = 72
+        static let selectButtonOffsetLeading: CGFloat = 4
+        static let selectButtonOffsetTrailing: CGFloat = -1 * 20
+
         // event stack view (textfields)
         static let eventStackViewSpacing: CGFloat = 24
-        static let eventStackViewOffsetTop: CGFloat = 32
-        static let eventStackViewOffsetLeading: CGFloat = 20
-        static let eventStackViewOffsetTrailing: CGFloat = -1 * 20
+        static let eventStackViewOffsetTop: CGFloat = 24
         
         // create event button
         static let createEventButtonOffsetTop: CGFloat = 24
+        
+        // event title textfield
+        static let eventTitleTextFieldOffsetTop: CGFloat = 32
+        static let eventTitleTextFieldOffsetLeading: CGFloat = 20
+        static let eventTitleTextFieldOffsetTrailing: CGFloat = -1 * 68
+        
+        // alert
+        static let alertTitle: String = "Ooops..."
+        static let alertMessage: String = "Fill in all the fields"
+        static let alertActionTitle: String = "OK"
+
+        // date format
+        static let dateFormat: String = "dd MMM yyyy, HH:mm"
     }
     
     // MARK: - Fields
@@ -109,22 +126,22 @@ final class WishEventCreationView: UIView {
         eventTitleTextField.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(eventTitleTextField)
-        eventTitleTextField.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 32).isActive = true
-        eventTitleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
-        eventTitleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -68).isActive = true
+        eventTitleTextField.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: Constants.eventTitleTextFieldOffsetTop).isActive = true
+        eventTitleTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.eventTitleTextFieldOffsetLeading).isActive = true
+        eventTitleTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.closeButtonOffsetTrailing).isActive = true
     }
     
     private func configureSelectButton() {
-        selectButton.setImage(UIImage(systemName: "list.star"), for: .normal)
+        selectButton.setImage(Constants.selectButtonImageName, for: .normal)
         selectButton.tintColor = .systemPink
         selectButton.addTarget(self, action: #selector(selectButtonWasTapped), for: .touchUpInside)
         selectButton.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(selectButton)
         
-        selectButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 72).isActive = true
-        selectButton.leadingAnchor.constraint(equalTo: eventTitleTextField.trailingAnchor, constant: 4).isActive = true
-        selectButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20).isActive = true
+        selectButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: Constants.selectButtonOffsetTop).isActive = true
+        selectButton.leadingAnchor.constraint(equalTo: eventTitleTextField.trailingAnchor, constant: Constants.selectButtonOffsetLeading).isActive = true
+        selectButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: Constants.selectButtonOffsetTrailing).isActive = true
     }
 
     private func configureEventStackView() {
@@ -147,7 +164,7 @@ final class WishEventCreationView: UIView {
         eventStackView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(eventStackView)
-        eventStackView.topAnchor.constraint(equalTo: eventTitleTextField.bottomAnchor, constant: 24).isActive = true
+        eventStackView.topAnchor.constraint(equalTo: eventTitleTextField.bottomAnchor, constant: Constants.eventStackViewOffsetTop).isActive = true
         eventStackView.leadingAnchor.constraint(equalTo: eventTitleTextField.leadingAnchor).isActive = true
         eventStackView.trailingAnchor.constraint(equalTo: selectButton.trailingAnchor).isActive = true
     }
@@ -176,8 +193,15 @@ final class WishEventCreationView: UIView {
         createEventButton.action = { [weak self] in
             guard let title = self?.eventTitleTextField.getText(), !title.isEmpty, let description = self?.eventDescriptionTextField.getText(), !description.isEmpty, let startDateString = self?.eventStartDateTextField.getText(), !startDateString.isEmpty, let endDateString = self?.eventEndDateTextField.getText(), !endDateString.isEmpty
             else {
-                let alert = UIAlertController(title: "Ooops...", message: "Fill in all the fields", preferredStyle: .alert)
-                let action = UIAlertAction(title: "OK", style: .default)
+                let alert = UIAlertController(
+                    title: Constants.alertActionTitle,
+                    message: Constants.alertMessage,
+                    preferredStyle: .alert
+                )
+                let action = UIAlertAction(
+                    title: Constants.alertActionTitle,
+                    style: .default
+                )
                 alert.addAction(action)
                 self?.delegate?.presentAlert(alert: alert)
                 
@@ -185,6 +209,8 @@ final class WishEventCreationView: UIView {
             }
             
             let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = Constants.dateFormat
+            
             let startDate = dateFormatter.date(from: startDateString)
             let endDate = dateFormatter.date(from: endDateString)
             

@@ -91,7 +91,10 @@ final class CustomTextField: UIView {
         textField.delegate = self
         
         addSubview(textField)
-        textField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constants.textFieldOffsetTop).isActive = true
+        textField.topAnchor.constraint(
+            equalTo: titleLabel.bottomAnchor,
+            constant: Constants.textFieldOffsetTop
+        ).isActive = true
         textField.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         textField.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         textField.heightAnchor.constraint(equalToConstant: Constants.textFieldHeight).isActive = true

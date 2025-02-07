@@ -17,12 +17,18 @@ protocol WishCoreDataManagerLogic {
     func deleteAllWishes()
     func deleteWish(withId id: Int16)
 }
+
 // MARK: - Type of error
 public enum WishManagerError: Error {
     case entityNotFound
     case listOfWishesNotFound
 }
 public final class WishCoreDataManager: WishCoreDataManagerLogic {
+    // MARK: - Constants
+    enum Constants {
+        static let entityName: String = "Wish"
+    }
+    
     // MARK: - Singleton
     public static let shared = WishCoreDataManager()
     private init() { }
@@ -38,7 +44,10 @@ public final class WishCoreDataManager: WishCoreDataManagerLogic {
     
     // MARK: CRUD Methods
     func createWish(withId id: Int16, title: String) throws {
-        guard let wishDescription = NSEntityDescription.entity(forEntityName: "Wish", in: context) else {
+        guard let wishDescription = NSEntityDescription.entity(
+            forEntityName: Constants.entityName,
+            in: context
+        ) else {
             throw WishManagerError.entityNotFound
         }
         let wish = Wish(entity: wishDescription, insertInto: context)
@@ -49,7 +58,7 @@ public final class WishCoreDataManager: WishCoreDataManagerLogic {
     }
     
     func fetchWishes() -> Result<[Wish], WishManagerError> {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Wish")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.entityName)
         if let wishes = try? context.fetch(fetchRequest) as? [Wish] {
             return .success(wishes)
         } else {
@@ -58,9 +67,13 @@ public final class WishCoreDataManager: WishCoreDataManagerLogic {
     }
     
     func fetchWish(withId id: Int16) -> Wish? {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Wish")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.entityName)
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
-        guard let wish = try? context.fetch(fetchRequest).first as? Wish else { return nil }
+        guard let wish = try? context.fetch(
+            fetchRequest
+        ).first as? Wish else {
+            return nil
+        }
         return wish
     }
     
